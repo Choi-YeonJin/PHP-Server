@@ -19,10 +19,10 @@
 use Model\UserModel;
 use DAO\UserDAO;
 
-include_once("../application/lib/autoload.php");
+include_once ("../application/lib/autoload.php");
 
 $lineStr = "<br><br>---------------------------------------------------<br><br>";
-// Tip.... 에러를 확인하고 싶을 경우 사용
+// Tip.... 에러를 확인하고 싶을 경우 사용 -> https://ra2kstar.tistory.com/102 확인
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
@@ -44,7 +44,8 @@ $userDAO = new UserDAO();
 // 3-1. INSERT
 echo "<p>1) insert, 데이터 삽입</p><br>";
 $userId = $userDAO->insert($userModel); // 위에 받았던 (파라미터->객체) insert
-echo "userId : {$userId}".$lineStr;
+//echo "userId : {$userId}".$lineStr;
+echo print_r($_REQUEST).$lineStr;
 
 // 3-2. SELECT
 echo "<p>3) select, 단일 검색</p><br>";
@@ -55,12 +56,17 @@ echo $lineStr;
 echo "<p>4) select, 전체 리스트 검색</p><br>";
 $userList = $userDAO->selectAll(); // 전체 리스트 select
 foreach ($userList as $userModel){
-    echo "id : {$userModel->getId()}, name : {$userModel->getName()}\n";
+    echo "id : {$userModel->getId()}, name : {$userModel->getName()}<br>";
 }
 echo $lineStr;
 
 
 // 3-3. UPDATE 연진이가 해보기 숙제 ^^
 echo "<p>5) update, 연진 숙제 ~ </p><br>";
+$name='a';
+var_export($userDAO->update($id,$name)); // 위에 받았던 (파라미터->객체) insert
+echo $lineStr;
+//echo print_r($_REQUEST).$lineStr;
+
 // 3-4. DELETE 연진이가 해보기 숙제 ^^
 echo "<p>6) delete, 연진 숙제 ~ </p><br>";

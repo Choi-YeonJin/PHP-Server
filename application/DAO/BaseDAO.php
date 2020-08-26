@@ -22,10 +22,10 @@ class BaseDAO
 
     public function __construct()
     {
-        $host = "13.209.98.78";
-        $userName = "itkoo";
-        $password = "itkoo's secret password";
-        $dbName = "test";
+        $host = "3.23.157.65";
+        $userName = "simforpay";
+        $password = "simforpay0!";
+        $dbName = "simforpay";
         $charset = 'utf8mb4';
 
         $dsn = "mysql:host={$host};dbname={$dbName};charset={$charset}";
@@ -68,6 +68,7 @@ class BaseDAO
      * @return array|bool
      */
     public function getAllResultAsArray($fetchStyle = PDO::FETCH_BOTH) {
+        // FETCH_BOTH : 배열번호와 값, 배열 이름과 값이 모두 나옴 ex) result : [NAME]:'BANANA',[0]:'BANANA'
         if (empty($this->stmt)) {
             return array();
         } else {
@@ -126,6 +127,22 @@ class BaseDAO
      * @return int|false|null
      */
     public function getInsertId() {
+        if (empty($this->pdo)) {
+            return null;
+        } else {
+            try {
+                return $this->pdo->lastInsertId();
+            } catch (PDOException $e) {
+                $this->error = $e->getMessage();
+                return false;
+            }
+        }
+    }
+
+    /**
+     * @return int|false|null
+     */
+    public function getDeleteId() {
         if (empty($this->pdo)) {
             return null;
         } else {

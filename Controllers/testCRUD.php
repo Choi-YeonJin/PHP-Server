@@ -13,7 +13,7 @@ include_once("application/lib/autoload.php");
 $userDAO = new UserDAO();
 $userModel = new UserModel();
 
-$userModel->setName("구지원");
+$userModel->setName("yeonjin");
 $userModel->setCreatedAt(time());
 
 $userId = $userDAO->insert($userModel);
