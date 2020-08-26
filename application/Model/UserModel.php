@@ -11,9 +11,14 @@ include_once("application/lib/autoload.php");
 
 class UserModel extends BaseModel {
     /**s
-     * @var int
+     * @var string
      */
-    private $id;
+    private $myid;
+
+    /**s
+     * @var string
+     */
+    private $password;
 
     /**
      * @var string
@@ -21,24 +26,50 @@ class UserModel extends BaseModel {
     private $name;
 
     /**
+     * @var string
+     */
+    private $imageUrl;
+
+    /**
+     * @var string
+     */
+    private $phoneNum;
+
+    /**
      * @var int
      */
     private $createdAt;
 
     /**
-     * @return int
+     * @return string
      */
-    public function getId(): ?int
+    public function getMyid(): ?string
     {
-        return $this->id;
+        return $this->myid;
     }
 
     /**
-     * @param int $id
+     * @param string $myid
      */
-    public function setId(?int $id): void
+    public function setMyid(?string $myid): void
     {
-        $this->id = $id;
+        $this->myid = $myid;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword(?string $password): void
+    {
+        $this->password = $password;
     }
 
     /**
@@ -58,6 +89,38 @@ class UserModel extends BaseModel {
     }
 
     /**
+     * @return string
+     */
+    public function getImageUrl(): ?string
+    {
+        return $this->imageUrl;
+    }
+
+    /**
+     * @param string $imageUrl
+     */
+    public function setImageUrl(?string $imageUrl): void
+    {
+        $this->imageUrl = $imageUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhoneNum(): ?string
+    {
+        return $this->phoneNum;
+    }
+
+    /**
+     * @param string $phoneNum
+     */
+    public function setPhoneNum(?string $phoneNum): void
+    {
+        $this->phoneNum = $phoneNum;
+    }
+
+    /**
      * @return int
      */
     public function getCreatedAt(): ?int
@@ -73,6 +136,8 @@ class UserModel extends BaseModel {
         $this->createdAt = $createdAt;
     }
 
+
+
     public function updateModel(UserModel $userModel){
         $updateCount = 0;
         if(strcmp($this->name, $userModel->getName()) !== 0){
@@ -80,4 +145,11 @@ class UserModel extends BaseModel {
             $this->setName($userModel->getName());
         }
     }
+
+
+
+
+
+
+
 }
