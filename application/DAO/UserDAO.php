@@ -53,8 +53,8 @@ class UserDAO extends BaseDAO
      * @param $id
      * @return UserModel
      */
-    public function select($id){
-        $query = "SELECT * FROM {$this->tableName} WHERE id = {$id}";
+    public function select($myid,$password){
+        $query = "SELECT * FROM {$this->tableName} WHERE myid = '{$myid}' and password = '{$password}'";
         $this->db->executeQuery($query);
         return $this->db->getResultAsObject(new UserModel());
     }
