@@ -26,7 +26,6 @@ $userModel->setCreatedAt(time()); // 시간은 서버 시간으로 세팅
 $userDAO = new UserDAO();
 
 // 3-1. INSERT
-echo "1) SignUp, 회원가입 <br>";
 $myid=$userModel->getMyid();
 $password=$userModel->getPassword();
 $name=$userModel->getName();
@@ -37,8 +36,15 @@ $result = $userDAO->selectByID($myid);
 // echo $result."<br>";
 if($result==0){
     $userId = $userDAO->insert($userModel); // 위에 받았던 (파라미터->객체) insert
-    echo "userId : {$userId}";
+
+    $data = ["result" => "true",
+        "userId" => "{$userId}"];
+
+    echo json_encode($data);
 }else{
-    echo "ID is already taken";
+    $data = ["result" => "false",
+        "errorMessage" => "ID is alreay taken"];
+
+    echo json_encode($data);
 }
 ?>
