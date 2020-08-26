@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="c4fd057d-0183-4294-8a09-480dd4f7eca5" name="simforpay" url="http://yjini.site">
+        <fileTransfer rootFolder="/home/project" accessType="SFTP" host="3.23.157.65" port="22" sshConfigId="5ab7491e-d466-4b40-9ad1-3276a0c3e28b" sshConfig="ubuntu@3.23.157.65:22 key" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

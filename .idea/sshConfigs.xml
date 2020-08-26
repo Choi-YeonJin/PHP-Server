@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig host="3.23.157.65" id="5ab7491e-d466-4b40-9ad1-3276a0c3e28b" keyPath="C:\Users\yeonj\Downloads\App0-Key.pem" port="22" nameFormat="DESCRIPTIVE" username="ubuntu" />
+    </configs>
+  </component>
+</project>
