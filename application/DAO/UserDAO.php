@@ -40,6 +40,16 @@ class UserDAO extends BaseDAO
     }
 
     /**
+     * @param $id string
+     * @return UserModel
+     */
+    public function selectByID($id){
+        $query = "SELECT * FROM {$this->tableName} WHERE myid like '{$id}'";
+        $this->db->executeQuery($query);
+        return $this->stmt->rowCount();
+    }
+
+    /**
      * @param $id
      * @return UserModel
      */

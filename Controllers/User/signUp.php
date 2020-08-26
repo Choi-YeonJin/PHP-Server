@@ -26,17 +26,19 @@ echo $lineStr;
 $userDAO = new UserDAO();
 
 // 3-1. INSERT
-echo "<p>1) insert, 데이터 삽입</p><br>";
-$userId = $userDAO->insert($userModel); // 위에 받았던 (파라미터->객체) insert
-echo "userId : {$userId}".$lineStr;
-//echo print_r($_REQUEST).$lineStr;
-
-
-//name 중복검사
+echo "<p>1) SignUp, 회원가입 </p><br>";
 $myid=$userModel->getMyid();
 $password=$userModel->getPassword();
 $name=$userModel->getName();
 $imageUrl=$userModel->getImageUrl();
 $phoneNumber=$userModel->getPhoneNum();
-$userId = $userDAO->insert($userModel); // 위에 받았던 (파라미터->객체) insert
+//name 중복검사
+$result = $userDAO->selectByID($myid);
+// echo $result."<br>";
+if($result==0){
+    $userId = $userDAO->insert($userModel); // 위에 받았던 (파라미터->객체) insert
+    echo "userId : {$userId}".$lineStr;
+}else{
+    echo "ID is already taken";
+}
 ?>
