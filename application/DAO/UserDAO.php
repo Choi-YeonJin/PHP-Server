@@ -21,10 +21,18 @@ class UserDAO extends BaseDAO
      */
     public function insert(UserModel $userModel){
         $query = "INSERT INTO {$this->tableName} (
+                    myid,
+                    password,
                     name,
-                    created_at
+                    imageUrl,
+                    phoneNum,
+                    createdAt
                     ) VALUES (
-                    '{$userModel->getName()}',  
+                    '{$userModel->getMyid()}',
+                    '{$userModel->getPassword()}',
+                    '{$userModel->getName()}',
+                    '{$userModel->getImageUrl()}',
+                    '{$userModel->getPhoneNum()}',
                     {$userModel->getCreatedAt()})";
 
         $this->db->executeQuery($query);

@@ -29,4 +29,14 @@ $userDAO = new UserDAO();
 echo "<p>1) insert, 데이터 삽입</p><br>";
 $userId = $userDAO->insert($userModel); // 위에 받았던 (파라미터->객체) insert
 echo "userId : {$userId}".$lineStr;
+//echo print_r($_REQUEST).$lineStr;
+
+
+//name 중복검사
+$myid=$userModel->getMyid();
+$password=$userModel->getPassword();
+$name=$userModel->getName();
+$imageUrl=$userModel->getImageUrl();
+$phoneNumber=$userModel->getPhoneNum();
+$userId = $userDAO->insert($userModel); // 위에 받았던 (파라미터->객체) insert
 ?>
