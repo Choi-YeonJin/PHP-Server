@@ -7,15 +7,21 @@
  */
 
 namespace Model;
-include_once("application/lib/autoload.php");
+include_once("../../application/lib/autoload.php");
 
 class UserModel extends BaseModel {
-    /**s
+
+    /**
+     * @var int
+     */
+    private $id;
+
+    /**
      * @var string
      */
     private $myid;
 
-    /**s
+    /**
      * @var string
      */
     private $password;
@@ -39,6 +45,22 @@ class UserModel extends BaseModel {
      * @var int
      */
     private $createdAt;
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
 
     /**
      * @return string

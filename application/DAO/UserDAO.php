@@ -9,7 +9,7 @@
 namespace DAO;
 use Model\UserModel;
 
-include_once("application/lib/autoload.php");
+include_once("../../application/lib/autoload.php");
 
 class UserDAO extends BaseDAO
 {
@@ -43,10 +43,20 @@ class UserDAO extends BaseDAO
      * @param $id string
      * @return UserModel
      */
-    public function selectByID($id){
+    public function selectmyidByID($id){
         $query = "SELECT * FROM {$this->tableName} WHERE myid like '{$id}'";
         $this->db->executeQuery($query);
         return $this->stmt->rowCount();
+    }
+
+    /**
+     * @param $id string
+     * @return UserModel
+     */
+    public function selectbyId($id){
+        $query = "SELECT * FROM {$this->tableName} WHERE id like '{$id}'";
+        $this->db->executeQuery($query);
+        return $this->db->getResultAsObject(new UserModel());
     }
 
     /**

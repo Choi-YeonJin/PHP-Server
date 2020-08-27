@@ -32,7 +32,7 @@ $name=$userModel->getName();
 $imageUrl=$userModel->getImageUrl();
 $phoneNumber=$userModel->getPhoneNum();
 //name 중복검사
-$result = $userDAO->selectByID($myid);
+$result = $userDAO->selectmyidByID($myid);
 // echo $result."<br>";
 if($result==0){
     $userId = $userDAO->insert($userModel); // 위에 받았던 (파라미터->객체) insert
