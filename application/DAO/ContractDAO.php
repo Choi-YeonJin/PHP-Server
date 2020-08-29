@@ -14,26 +14,30 @@ class ContractDAO extends BaseDAO
      * @return false|int|null
      */
     public function insert(ContractModel $contractModel){
+        $penalty =  str_replace ("'", "\'", $contractModel->getPenalty());
+
         $query = "INSERT INTO {$this->tableName} (
                     title,
-                    borrowDate,
-                    paybackDate,
+                    borrow_date,
+                    payback_date,
                     price,
-                    userId,
-                    userName,
+                    lender_id,
+                    lender_name,
                     penalty,
                     alarm,
-                    createdAt
+                    created_at,
+                    updated_at
                     ) VALUES (
                     '{$contractModel->getTitle()}',
                     '{$contractModel->getBorrowDate()}',
                     '{$contractModel->getPaybackDate()}',
                     {$contractModel->getPrice()},
-                    {$contractModel->getUserId()},
-                    '{$contractModel->getUserName()}'
-                    '{$contractModel->getPenalty()}'
+                    {$contractModel->getLenderId()},
+                    '{$contractModel->getLenderName()}',
+                    '{$penalty}',
                     {$contractModel->getAlarm()},
-                    {$contractModel->getCreatedAt()})";
+                    {$contractModel->getCreatedAt()},
+                    {$contractModel->getUpdatedAt()})";
 
         $this->db->executeQuery($query);
         return $this->db->getInsertId();
@@ -43,8 +47,8 @@ class ContractDAO extends BaseDAO
      * @param $name
      * @return ContractModel
      */
-    public function selectuserName($name){
-        $query = "SELECT * FROM {$this->tableName} WHERE userName like {$name}";
+    public function selectlender($name){
+        $query = "SELECT * FROM {$this->tableName} WHERE lender_name like '{$name}'";
         $this->db->executeQuery($query);
         return $this->db->getResultAsObject(new ContractModel());
     }

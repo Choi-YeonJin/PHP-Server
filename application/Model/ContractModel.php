@@ -17,12 +17,12 @@ class ContractModel extends BaseModel
     /**
      * @var string
      */
-    private $borrowDate;
+    private $borrow_date;
 
     /**
      * @var string
      */
-    private $paybackDate;
+    private $payback_date;
 
     /**
      * @var int
@@ -32,12 +32,12 @@ class ContractModel extends BaseModel
     /**
      * @var int
      */
-    private $userId;
+    private $lender_id;
 
     /**
      * @var string
      */
-    private $userName;
+    private $lender_name;
 
     /**
      * @var string
@@ -57,8 +57,12 @@ class ContractModel extends BaseModel
     /**
      * @var int
      */
-    private $createdAt;
+    private $created_at;
 
+    /**
+     * @var int
+     */
+    private $updated_at;
 
     /**
      * @return int
@@ -79,7 +83,7 @@ class ContractModel extends BaseModel
     /**
      * @return string
      */
-    public function getTitle(): ?string
+    public function getTitle()
     {
         return $this->title;
     }
@@ -87,7 +91,7 @@ class ContractModel extends BaseModel
     /**
      * @param string $title
      */
-    public function setTitle(?string $title): void
+    public function setTitle($title)
     {
         $this->title = $title;
     }
@@ -95,39 +99,39 @@ class ContractModel extends BaseModel
     /**
      * @return string
      */
-    public function getBorrowDate(): ?string
+    public function getBorrowDate()
     {
-        return $this->borrowDate;
+        return $this->borrow_date;
     }
 
     /**
-     * @param string $borrowDate
+     * @param string $borrow_date
      */
-    public function setBorrowDate(?string $borrowDate): void
+    public function setBorrowDate($borrow_date)
     {
-        $this->borrowDate = $borrowDate;
+        $this->borrow_date = $borrow_date;
     }
 
     /**
      * @return string
      */
-    public function getPaybackDate(): ?string
+    public function getPaybackDate()
     {
-        return $this->paybackDate;
+        return $this->payback_date;
     }
 
     /**
-     * @param string $paybackDate
+     * @param string $payback_date
      */
-    public function setPaybackDate(?string $paybackDate): void
+    public function setPaybackDate($payback_date)
     {
-        $this->paybackDate = $paybackDate;
+        $this->payback_date = $payback_date;
     }
 
     /**
      * @return int
      */
-    public function getPrice(): ?int
+    public function getPrice()
     {
         return $this->price;
     }
@@ -135,7 +139,7 @@ class ContractModel extends BaseModel
     /**
      * @param int $price
      */
-    public function setPrice(?int $price): void
+    public function setPrice($price)
     {
         $this->price = $price;
     }
@@ -143,33 +147,33 @@ class ContractModel extends BaseModel
     /**
      * @return int
      */
-    public function getUserId(): ?int
+    public function getLenderId()
     {
-        return $this->userId;
+        return $this->lender_id;
     }
 
     /**
-     * @param int $userId
+     * @param int $lender_id
      */
-    public function setUserId(?int $userId): void
+    public function setLenderId($lender_id)
     {
-        $this->userId = $userId;
+        $this->lender_id = $lender_id;
     }
 
     /**
      * @return string
      */
-    public function getUserName(): ?string
+    public function getLenderName()
     {
-        return $this->userName;
+        return $this->lender_name;
     }
 
     /**
-     * @param string $userName
+     * @param string $lender_name
      */
-    public function setUserName(?string $userName): void
+    public function setLenderName($lender_name)
     {
-        $this->userName = $userName;
+        $this->lender_name = $lender_name;
     }
 
     /**
@@ -188,12 +192,10 @@ class ContractModel extends BaseModel
         $this->penalty = $penalty;
     }
 
-
-
     /**
      * @return int
      */
-    public function getAlarm(): ?int
+    public function getAlarm()
     {
         return $this->alarm;
     }
@@ -201,7 +203,7 @@ class ContractModel extends BaseModel
     /**
      * @param int $alarm
      */
-    public function setAlarm(?int $alarm): void
+    public function setAlarm($alarm)
     {
         $this->alarm = $alarm;
     }
@@ -225,20 +227,34 @@ class ContractModel extends BaseModel
     /**
      * @return int
      */
-    public function getCreatedAt(): ?int
+    public function getCreatedAt()
     {
-        return $this->createdAt;
+        return $this->created_at;
     }
 
     /**
-     * @param int $createdAt
+     * @param int $created_at
      */
-    public function setCreatedAt(?int $createdAt): void
+    public function setCreatedAt($created_at)
     {
-        $this->createdAt = $createdAt;
+        $this->created_at = $created_at;
     }
 
+    /**
+     * @return int
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updated_at;
+    }
 
+    /**
+     * @param int $updated_at
+     */
+    public function setUpdatedAt($updated_at)
+    {
+        $this->updated_at = $updated_at;
+    }
 
 
 }
