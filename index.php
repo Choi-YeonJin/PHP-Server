@@ -1,18 +1,32 @@
 <?php
-$ip = "3.23.157.65";
-$userName = "simforpay";
-$password = "simforpay0!";
-$databaseName = "simforpay";
-$port = "3306";
 
-$conn = mysqli_connect( $ip, $userName, $password, $databaseName, $port);
+use Controllers\UserController;
 
-if (mysqli_connect_errno())
-{
-        echo "Failed to connect to MySQL: " . mysqli_connect_error();
+include_once ("application/lib/autoload.php");
+
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
+
+
+$userController = new UserController();
+$url = parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH);
+$url = explode('/',$url);
+$requestMethod = $_SERVER['REQUEST_METHOD'];
+
+if($url[3]=='users'){
+        switch ($requestMethod){
+                case 'GET':
+                        $userController->select($_GET);
+                        break;
+                case 'POST':
+                        $userController->create();
+                        break;
+                case 'PUT':
+                        $userController->update();
+                        break;
+                case 'DELETE':
+                        $userController->delete($_GET);
+        }
+
 }
-echo "succesful connect";
-$sql = "SELECT VERSION()";
-$result = mysqli_query($conn, $sql);
-$row = mysqli_fetch_array($result);
 ?>
