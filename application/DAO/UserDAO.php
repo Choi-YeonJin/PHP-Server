@@ -9,7 +9,7 @@
 namespace DAO;
 use Model\UserModel;
 
-include_once("application/lib/autoload.php");
+include_once("../../application/lib/autoload.php");
 
 class UserDAO extends BaseDAO
 {
@@ -21,22 +21,52 @@ class UserDAO extends BaseDAO
      */
     public function insert(UserModel $userModel){
         $query = "INSERT INTO {$this->tableName} (
+                    myid,
+                    password,
                     name,
-                    created_at
+                    image_url,
+                    phone_num,
+                    created_at,
+                    updated_at 
                     ) VALUES (
-                    '{$userModel->getName()}',  
-                    {$userModel->getCreatedAt()})";
+                    '{$userModel->getMyid()}',
+                    '{$userModel->getPassword()}',
+                    '{$userModel->getName()}',
+                    '{$userModel->getImageUrl()}',
+                    '{$userModel->getPhoneNum()}',
+                    {$userModel->getCreatedAt()},
+                    {$userModel->getUpdatedAt()})";
 
         $this->db->executeQuery($query);
         return $this->db->getInsertId();
     }
 
     /**
+     * @param $id string
+     * @return UserModel
+     */
+    public function selectmyidByID($id){
+        $query = "SELECT * FROM {$this->tableName} WHERE myid like '{$id}'";
+        $this->db->executeQuery($query);
+        return $this->stmt->rowCount();
+    }
+
+    /**
+     * @param $id string
+     * @return UserModel
+     */
+    public function selectbyId($id){
+        $query = "SELECT * FROM {$this->tableName} WHERE id like '{$id}'";
+        $this->db->executeQuery($query);
+        return $this->db->getResultAsObject(new UserModel());
+    }
+
+    /**
      * @param $id
      * @return UserModel
      */
-    public function select($id){
-        $query = "SELECT * FROM {$this->tableName} WHERE id = {$id}";
+    public function select($myid,$password){
+        $query = "SELECT * FROM {$this->tableName} WHERE myid = '{$myid}' and password = '{$password}'";
         $this->db->executeQuery($query);
         return $this->db->getResultAsObject(new UserModel());
     }
