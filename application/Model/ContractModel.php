@@ -1,9 +1,14 @@
 <?php
 namespace Model;
-include_once("application/lib/autoload.php");
+include_once("../../application/lib/autoload.php");
 
 class ContractModel extends BaseModel
 {
+    /**
+     * @var int
+     */
+    private $id;
+
     /**
      * @var string
      */
@@ -37,10 +42,15 @@ class ContractModel extends BaseModel
     /**
      * @var string
      */
+    private $penalty;
+
+    /**
+     * @var int
+     */
     private $alarm;
 
     /**
-     * @var state
+     * @var int
      */
     private $state;
 
@@ -49,6 +59,22 @@ class ContractModel extends BaseModel
      */
     private $createdAt;
 
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
     /**
      * @return string
@@ -149,31 +175,49 @@ class ContractModel extends BaseModel
     /**
      * @return string
      */
-    public function getAlarm(): ?string
+    public function getPenalty()
+    {
+        return $this->penalty;
+    }
+
+    /**
+     * @param string $penalty
+     */
+    public function setPenalty($penalty)
+    {
+        $this->penalty = $penalty;
+    }
+
+
+
+    /**
+     * @return int
+     */
+    public function getAlarm(): ?int
     {
         return $this->alarm;
     }
 
     /**
-     * @param string $alarm
+     * @param int $alarm
      */
-    public function setAlarm(?string $alarm): void
+    public function setAlarm(?int $alarm): void
     {
         $this->alarm = $alarm;
     }
 
     /**
-     * @return state
+     * @return int
      */
-    public function getState(): ?string
+    public function getState()
     {
         return $this->state;
     }
 
     /**
-     * @param state $state
+     * @param int $state
      */
-    public function setState(?string $state): void
+    public function setState($state)
     {
         $this->state = $state;
     }
