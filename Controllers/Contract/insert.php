@@ -15,6 +15,8 @@ ini_set("display_errors", 1);
 $contractModel = new ContractModel();
 $contractModel->setByArray(json_decode(file_get_contents('php://input'))); // 요청받은 파라미터를 객체에 맞게끔 변형, data set
 $contractModel->setCreatedAt(time()); // 시간은 서버 시간으로 세팅
+$contractModel->setUpdatedAt(time()); // 시간은 서버 시간으로 세팅
+$contractModel->setState(0); // 시간은 서버 시간으로 세팅
 
 //$borrowerModel = new BorrowerModel();
 //$borrowerModel->setByArray(json_decode(file_get_contents('php://input'))); // 요청받은 파라미터를 객체에 맞게끔 변형, data set
@@ -28,18 +30,17 @@ echo $lineStr;
 //CRUD
 $contractDAO = new ContractDAO();
 
-$id=$contractModel->getId();
-$title=$contractModel->getTitle();
-$borrowDate=$contractModel->getBorrowDate();
-$paybackDate=$contractModel->getPaybackDate();
-$price=$contractModel->getPrice();
-$name = $contractModel->getUserName();
-var_dump($contractDAO->selectId($id));    //Name select
-//var_dump($contractDAO->selectuserName($name));
-$penalty = $contractModel->getPenalty();
-$alarm = $contractModel->getAlarm();
-//$userId =  $contractDAO->insert($contractModel);
-//echo "userId : {$userId}".$lineStr;
+//$id=$contractModel->getId();
+//$title=$contractModel->getTitle();
+//$borrowDate=$contractModel->getBorrowDate();
+//$paybackDate=$contractModel->getPaybackDate();
+//$price=$contractModel->getPrice();
+//$lender_id = $contractModel->getLenderId();
+//$name = $contractModel->getLenderName();
+//$penalty = $contractModel->getPenalty();
+$userId =  $contractDAO->insert($contractModel);
+
+echo "userId : {$userId}".$lineStr;
 
 //$contractList = $contractDAO->selectAll(); // 전체 리스트 select
 //foreach ($contractList as $contractModel){
