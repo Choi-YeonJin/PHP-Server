@@ -7,10 +7,11 @@
  */
 
 namespace Model;
-include_once("application/lib/autoload.php");
+include_once("../../application/lib/autoload.php");
 
 class UserModel extends BaseModel {
-    /**s
+
+    /**
      * @var int
      */
     private $id;
@@ -18,17 +19,42 @@ class UserModel extends BaseModel {
     /**
      * @var string
      */
+    private $myid;
+
+    /**
+     * @var string
+     */
+    private $password;
+
+    /**
+     * @var string
+     */
     private $name;
+
+    /**
+     * @var string
+     */
+    private $image_url;
+
+    /**
+     * @var string
+     */
+    private $phone_num;
 
     /**
      * @var int
      */
-    private $createdAt;
+    private $created_at;
+
+    /**
+     * @var int
+     */
+    private $updated_at;
 
     /**
      * @return int
      */
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -36,9 +62,41 @@ class UserModel extends BaseModel {
     /**
      * @param int $id
      */
-    public function setId(?int $id): void
+    public function setId(int $id): void
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMyid(): ?string
+    {
+        return $this->myid;
+    }
+
+    /**
+     * @param string $myid
+     */
+    public function setMyid(?string $myid): void
+    {
+        $this->myid = $myid;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword(?string $password): void
+    {
+        $this->password = $password;
     }
 
     /**
@@ -58,20 +116,70 @@ class UserModel extends BaseModel {
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getCreatedAt(): ?int
+    public function getImageUrl(): string
     {
-        return $this->createdAt;
+        return $this->image_url;
     }
 
     /**
-     * @param int $createdAt
+     * @param string $image_url
      */
-    public function setCreatedAt(?int $createdAt): void
+    public function setImageUrl(string $image_url): void
     {
-        $this->createdAt = $createdAt;
+        $this->image_url = $image_url;
     }
+
+    /**
+     * @return string
+     */
+    public function getPhoneNum(): string
+    {
+        return $this->phone_num;
+    }
+
+    /**
+     * @param string $phone_num
+     */
+    public function setPhoneNum(string $phone_num): void
+    {
+        $this->phone_num = $phone_num;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCreatedAt(): int
+    {
+        return $this->created_at;
+    }
+
+    /**
+     * @param int $created_at
+     */
+    public function setCreatedAt(int $created_at): void
+    {
+        $this->created_at = $created_at;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUpdatedAt(): int
+    {
+        return $this->updated_at;
+    }
+
+    /**
+     * @param int $updated_at
+     */
+    public function setUpdatedAt(int $updated_at): void
+    {
+        $this->updated_at = $updated_at;
+    }
+
+
 
     public function updateModel(UserModel $userModel){
         $updateCount = 0;
@@ -80,4 +188,11 @@ class UserModel extends BaseModel {
             $this->setName($userModel->getName());
         }
     }
+
+
+
+
+
+
+
 }
