@@ -15,6 +15,7 @@ $lineStr = "<br><br>---------------------------------------------------<br><br>"
 $userModel = new UserModel();
 $userModel->setByArray(json_decode(file_get_contents('php://input'))); // 요청받은 파라미터를 객체에 맞게끔 변형, data set
 $userModel->setCreatedAt(time()); // 시간은 서버 시간으로 세팅
+$userModel->setUpdatedAt(time()); // 시간은 서버 시간으로 세팅
 
 // 2. 객체를 json 타입으로 return
 //echo "<p>1) 파라미터를 객체에 set, 객체를 json 형태로 return</p><br>";

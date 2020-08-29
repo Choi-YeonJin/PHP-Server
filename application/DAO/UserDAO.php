@@ -24,16 +24,18 @@ class UserDAO extends BaseDAO
                     myid,
                     password,
                     name,
-                    imageUrl,
-                    phoneNum,
-                    createdAt
+                    image_url,
+                    phone_num,
+                    created_at,
+                    updated_at 
                     ) VALUES (
                     '{$userModel->getMyid()}',
                     '{$userModel->getPassword()}',
                     '{$userModel->getName()}',
                     '{$userModel->getImageUrl()}',
                     '{$userModel->getPhoneNum()}',
-                    {$userModel->getCreatedAt()})";
+                    {$userModel->getCreatedAt()},
+                    {$userModel->getUpdatedAt()})";
 
         $this->db->executeQuery($query);
         return $this->db->getInsertId();

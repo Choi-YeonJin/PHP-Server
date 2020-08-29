@@ -34,17 +34,22 @@ class UserModel extends BaseModel {
     /**
      * @var string
      */
-    private $imageUrl;
+    private $image_url;
 
     /**
      * @var string
      */
-    private $phoneNum;
+    private $phone_num;
 
     /**
      * @var int
      */
-    private $createdAt;
+    private $created_at;
+
+    /**
+     * @var int
+     */
+    private $updated_at;
 
     /**
      * @return int
@@ -113,49 +118,65 @@ class UserModel extends BaseModel {
     /**
      * @return string
      */
-    public function getImageUrl(): ?string
+    public function getImageUrl(): string
     {
-        return $this->imageUrl;
+        return $this->image_url;
     }
 
     /**
-     * @param string $imageUrl
+     * @param string $image_url
      */
-    public function setImageUrl(?string $imageUrl): void
+    public function setImageUrl(string $image_url): void
     {
-        $this->imageUrl = $imageUrl;
+        $this->image_url = $image_url;
     }
 
     /**
      * @return string
      */
-    public function getPhoneNum(): ?string
+    public function getPhoneNum(): string
     {
-        return $this->phoneNum;
+        return $this->phone_num;
     }
 
     /**
-     * @param string $phoneNum
+     * @param string $phone_num
      */
-    public function setPhoneNum(?string $phoneNum): void
+    public function setPhoneNum(string $phone_num): void
     {
-        $this->phoneNum = $phoneNum;
+        $this->phone_num = $phone_num;
     }
 
     /**
      * @return int
      */
-    public function getCreatedAt(): ?int
+    public function getCreatedAt(): int
     {
-        return $this->createdAt;
+        return $this->created_at;
     }
 
     /**
-     * @param int $createdAt
+     * @param int $created_at
      */
-    public function setCreatedAt(?int $createdAt): void
+    public function setCreatedAt(int $created_at): void
     {
-        $this->createdAt = $createdAt;
+        $this->created_at = $created_at;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUpdatedAt(): int
+    {
+        return $this->updated_at;
+    }
+
+    /**
+     * @param int $updated_at
+     */
+    public function setUpdatedAt(int $updated_at): void
+    {
+        $this->updated_at = $updated_at;
     }
 
 
