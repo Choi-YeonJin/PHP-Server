@@ -40,7 +40,7 @@ $contractDAO = new ContractDAO();
 //$penalty = $contractModel->getPenalty();
 $userId =  $contractDAO->insert($contractModel);
 
-echo "userId : {$userId}".$lineStr;
+echo "userId : {$userId}";
 
 //$contractList = $contractDAO->selectAll(); // 전체 리스트 select
 //foreach ($contractList as $contractModel){
