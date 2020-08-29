@@ -3,7 +3,7 @@
 use Model\UserModel;
 use DAO\UserDAO;
 
-include_once ("../../application/lib/autoload.php");
+include_once("../../application/lib/autoload.php");
 
 $lineStr = "<br><br>---------------------------------------------------<br><br>";
 // Tip.... 에러를 확인하고 싶을 경우 사용 -> https://ra2kstar.tistory.com/102 확인
