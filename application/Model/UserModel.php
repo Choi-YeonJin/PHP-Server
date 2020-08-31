@@ -7,7 +7,7 @@
  */
 
 namespace Model;
-include_once("../../application/lib/autoload.php");
+include_once("../../../application/lib/autoload.php");
 
 class UserModel extends BaseModel {
 
