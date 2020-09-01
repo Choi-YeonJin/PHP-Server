@@ -1,14 +1,13 @@
 <?php
-
 use Model\UserModel;
 use DAO\UserDAO;
 
-include_once ("../../application/lib/autoload.php");
+include_once("../../../application/lib/autoload.php");
 
 $lineStr = "<br><br>---------------------------------------------------<br><br>";
 // Tip.... 에러를 확인하고 싶을 경우 사용 -> https://ra2kstar.tistory.com/102 확인
-//error_reporting(E_ALL);
-//ini_set("display_errors", 1);
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
 
 // 1. 파라미터 값 객체에 넣기
 // ex) [http://itkoo.site?id=1&name=구지원] 으로 요청했을 경우
@@ -26,25 +25,16 @@ $userModel->setUpdatedAt(time()); // 시간은 서버 시간으로 세팅
 // 3. CRUD
 $userDAO = new UserDAO();
 
-// 3-1. INSERT
-$myid=$userModel->getMyid();
-$password=$userModel->getPassword();
-$name=$userModel->getName();
-$imageUrl=$userModel->getImageUrl();
-$phoneNumber=$userModel->getPhoneNum();
-//name 중복검사
-$result = $userDAO->selectmyidByID($myid);
-// echo $result."<br>";
-if($result==0){
-    $userId = $userDAO->insert($userModel); // 위에 받았던 (파라미터->객체) insert
-
-    $data = ["result" => "true",
-        "userId" => "{$userId}"];
+$myid = $userModel->getMyid();
+$password = $userModel->getPassword();
+$result = $userDAO->select($myid,$password); // id로 단일 검색
+if($result){
+    $data = ["result" => "true"];
 
     echo json_encode($data);
-}else{
-    $data = ["result" => "false",
-        "errorMessage" => "ID is alreay taken"];
+
+}else {
+    $data = ["result" => "false"];
 
     echo json_encode($data);
 }
