@@ -10,7 +10,7 @@ namespace DAO;
 use PDO;
 use PDOException;
 
-include_once("../../../application/lib/autoload.php");
+include_once("../../application/lib/autoload.php");
 
 class BaseDAO
 {

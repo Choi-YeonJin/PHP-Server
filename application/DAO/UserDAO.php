@@ -9,7 +9,7 @@
 namespace DAO;
 use Model\UserModel;
 
-include_once("../../../application/lib/autoload.php");
+include_once("../../application/lib/autoload.php");
 
 class UserDAO extends BaseDAO
 {
