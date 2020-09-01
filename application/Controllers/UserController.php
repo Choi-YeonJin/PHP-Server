@@ -73,6 +73,21 @@ class UserController
         var_export($userDAO->selectbyId($uriArray[2])); // id로 단일 검색
     }
 
+    public function selectAll()
+    {
+        $userModel = new UserModel();
+        $userDAO = new UserDAO();
+
+        $userList = $userDAO->selectAll(); // 전체 리스트 select
+
+        foreach ($userList as $userModel) {
+            $data = ["id" => "{$userModel->getId()}",
+                "myid" => "{$userModel->getMyid()}",
+                "name" => "{$userModel->getName()}"];
+            echo json_encode($data, JSON_UNESCAPED_UNICODE)."<br>";
+        }
+    }
+
     public function update($uriArray)
     {
         $userModel = new UserModel();

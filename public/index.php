@@ -17,6 +17,9 @@ switch ($method . ":" . $uriArray[1]) {
     case "GET:user":
         $userController->select($uriArray);
         break;
+    case "GET:userAll":
+        $userController->selectAll();
+        break;
     case "POST:user":
         $userController->create(file_get_contents('php://input'));
         break;
