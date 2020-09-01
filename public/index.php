@@ -22,6 +22,13 @@ switch ($method . ":" . $uriArray[1]) {
         break;
     case "POST:login":
         $userController->login(file_get_contents('php://input'));
+        break;
+    case "PUT:user":
+        $userController->update($uriArray);
+        break;
+    case "DELETE:user":
+        $userController->delete($uriArray);
+        break;
     default:
         break;
 }

@@ -89,4 +89,13 @@ class UserDAO extends BaseDAO
         return $this->stmt->rowCount();
     }
 
+    /**
+     * @return UserModel[]
+     */
+    public function delete($id){
+        $query = "delete from {$this->tableName} where id = {$id};";
+        $this->db->executeQuery($query);
+        return $this->stmt->rowCount();
+    }
+
 }

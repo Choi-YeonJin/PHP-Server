@@ -7,6 +7,9 @@ use DAO\UserDAO;
 
 include_once("../../application/lib/autoload.php");
 
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
+
 class UserController
 {
     public function create($data)
@@ -50,6 +53,37 @@ class UserController
         $password = $userModel->getPassword();
         $result = $userDAO->select($myid, $password); // id로 단일 검색
         if ($result) {
+            $data = ["result" => "true",
+                "userId"=>"{$result->getId()}"];
+
+            echo json_encode($data);
+        } else {
+            $data = ["result" => "false"];
+
+            echo json_encode($data);
+        }
+    }
+
+    public function select($uriArray)
+    {
+        $userModel = new UserModel();
+
+        $userDAO = new UserDAO();
+
+        var_export($userDAO->selectbyId($uriArray[2])); // id로 단일 검색
+    }
+
+    public function update($uriArray)
+    {
+        $userModel = new UserModel();
+        $userModel->setByArray(json_decode(file_get_contents('php://input'))); // 요청받은 파라미터를 객체에 맞게끔 변형, data set
+
+        $userDAO = new UserDAO();
+
+        $name = $userModel->getName();
+        $password = $userModel->getPassword();
+        $result = $userDAO->updateUserInfo($uriArray[2],$name,$password); // id로 단일 검색
+        if ($result != 0) {
             $data = ["result" => "true"];
 
             echo json_encode($data);
@@ -60,17 +94,22 @@ class UserController
         }
     }
 
-    public function update($userModel)
+    public function delete($uriArray)
     {
-    }
+        $userModel = new UserModel();
 
-    public function select($uriArray)
-    {
-        echo $uriArray[2];
-    }
+        $userDAO = new UserDAO();
 
-    public function delete($userId)
-    {
+        $result = $userDAO->delete($uriArray[2]); // id로 단일 검색
+        if ($result != 0) {
+            $data = ["result" => "true"];
+
+            echo json_encode($data);
+        } else {
+            $data = ["result" => "false"];
+
+            echo json_encode($data);
+        }
     }
 }
 
