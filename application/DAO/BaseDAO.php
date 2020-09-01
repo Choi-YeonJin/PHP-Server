@@ -140,22 +140,6 @@ class BaseDAO
     }
 
     /**
-     * @return int|false|null
-     */
-    public function getDeleteId() {
-        if (empty($this->pdo)) {
-            return null;
-        } else {
-            try {
-                return $this->pdo->lastInsertId();
-            } catch (PDOException $e) {
-                $this->error = $e->getMessage();
-                return false;
-            }
-        }
-    }
-
-    /**
      * @param $obj
      * @param $gs
      * @return array

@@ -45,7 +45,7 @@ class UserDAO extends BaseDAO
      * @param $id string
      * @return UserModel
      */
-    public function selectmyidByID($id){
+    public function selectmyidByID($id){ //회원가입 중복검사
         $query = "SELECT * FROM {$this->tableName} WHERE myid like '{$id}'";
         $this->db->executeQuery($query);
         return $this->stmt->rowCount();
@@ -55,7 +55,7 @@ class UserDAO extends BaseDAO
      * @param $id string
      * @return UserModel
      */
-    public function selectbyId($id){
+    public function selectbyId($id){ // select
         $query = "SELECT * FROM {$this->tableName} WHERE id like '{$id}'";
         $this->db->executeQuery($query);
         return $this->db->getResultAsObject(new UserModel());
@@ -65,7 +65,7 @@ class UserDAO extends BaseDAO
      * @param $id
      * @return UserModel
      */
-    public function select($myid,$password){
+    public function select($myid,$password){ //login
         $query = "SELECT * FROM {$this->tableName} WHERE myid = '{$myid}' and password = '{$password}'";
         $this->db->executeQuery($query);
         return $this->db->getResultAsObject(new UserModel());
@@ -80,5 +80,13 @@ class UserDAO extends BaseDAO
         return $this->db->getAllResultAsObject(new UserModel());
     }
 
+    /**
+     * @return UserModel[]
+     */
+    public function updateUserInfo($id,$name,$password){
+        $query = "UPDATE {$this->tableName} SET name='{$name}', password='{$password}' where id={$id}";
+        $this->db->executeQuery($query);
+        return $this->stmt->rowCount();
+    }
 
 }
