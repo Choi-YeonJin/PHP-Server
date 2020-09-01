@@ -1,6 +1,6 @@
 <?php
 namespace Model;
-include_once("../../application/lib/autoload.php");
+include_once("../../../application/lib/autoload.php");
 
 class ContractModel extends BaseModel
 {

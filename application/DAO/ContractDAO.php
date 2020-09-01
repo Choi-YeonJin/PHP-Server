@@ -3,7 +3,7 @@
 namespace DAO;
 use Model\ContractModel;
 
-include_once("../../application/lib/autoload.php");
+include_once("../../../application/lib/autoload.php");
 
 class ContractDAO extends BaseDAO
 {
