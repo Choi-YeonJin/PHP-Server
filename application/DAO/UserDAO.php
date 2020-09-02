@@ -9,7 +9,7 @@
 namespace DAO;
 use Model\UserModel;
 
-include_once("../../../application/lib/autoload.php");
+include_once("../../application/lib/autoload.php");
 
 class UserDAO extends BaseDAO
 {
@@ -85,6 +85,15 @@ class UserDAO extends BaseDAO
      */
     public function updateUserInfo($id,$name,$password){
         $query = "UPDATE {$this->tableName} SET name='{$name}', password='{$password}' where id={$id}";
+        $this->db->executeQuery($query);
+        return $this->stmt->rowCount();
+    }
+
+    /**
+     * @return UserModel[]
+     */
+    public function delete($id){
+        $query = "delete from {$this->tableName} where id = {$id};";
         $this->db->executeQuery($query);
         return $this->stmt->rowCount();
     }
