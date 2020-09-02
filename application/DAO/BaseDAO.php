@@ -138,6 +138,21 @@ class BaseDAO
             }
         }
     }
+    /**
+     * @return int|false|null
+     */
+    public function getLastChangedRowNum() {
+        if (empty($this->stmt)) {
+            return null;
+        } else {
+            try {
+                return $this->stmt->rowCount();
+            } catch (PDOException $e) {
+                $this->error = $e->getMessage();
+                return false;
+            }
+        }
+    }
 
     /**
      * @param $obj
