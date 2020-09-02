@@ -22,14 +22,27 @@ class UserController
 
         $myid = $userModel->getMyid();
 
-        //name 중복검사
+        $userId = $userDAO->insert($userModel); // 위에 받았던 (파라미터->객체) insert
+
+        $data = ["result" => "true",
+            "userId" => "{$userId}"];
+
+        echo json_encode($data);
+    }
+
+    public function selectbyMyid($data)
+    {
+        $userModel = new UserModel();
+        $userDAO = new UserDAO();
+
+        $userModel->setByArray(json_decode($data));
+
+        $myid = $userModel->getMyid();
+
         $result = $userDAO->selectmyidByID($myid);
 
         if ($result == 0) {
-            $userId = $userDAO->insert($userModel); // 위에 받았던 (파라미터->객체) insert
-
-            $data = ["result" => "true",
-                "userId" => "{$userId}"];
+            $data = ["result" => "true"];
 
             echo json_encode($data);
         } else {
@@ -38,6 +51,7 @@ class UserController
 
             echo json_encode($data);
         }
+
     }
 
     public function login($data)
@@ -54,7 +68,7 @@ class UserController
         $result = $userDAO->select($myid, $password); // id로 단일 검색
         if ($result) {
             $data = ["result" => "true",
-                "userId"=>"{$result->getId()}"];
+                "userId" => "{$result->getId()}"];
 
             echo json_encode($data);
         } else {
@@ -84,7 +98,7 @@ class UserController
             $data = ["id" => "{$userModel->getId()}",
                 "myid" => "{$userModel->getMyid()}",
                 "name" => "{$userModel->getName()}"];
-            echo json_encode($data, JSON_UNESCAPED_UNICODE)."<br>";
+            echo json_encode($data, JSON_UNESCAPED_UNICODE) . "<br>";
         }
     }
 
@@ -97,7 +111,7 @@ class UserController
 
         $name = $userModel->getName();
         $password = $userModel->getPassword();
-        $result = $userDAO->updateUserInfo($uriArray[2],$name,$password); // id로 단일 검색
+        $result = $userDAO->updateUserInfo($uriArray[2], $name, $password); // id로 단일 검색
         if ($result != 0) {
             $data = ["result" => "true"];
 

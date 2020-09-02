@@ -27,7 +27,10 @@ switch ($method . ":" . $uriArray[1]) {
     case "POST:user":
         $userController->create(file_get_contents('php://input'));
         break;
-    case "POST:login":
+    case "POST:validUserId":
+        $userController->selectbyMyid(file_get_contents('php://input'));
+        break;
+    case "POST:signin":
         $userController->login(file_get_contents('php://input'));
         break;
     case "PUT:user":
