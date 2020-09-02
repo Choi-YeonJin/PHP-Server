@@ -3,7 +3,7 @@
 namespace DAO;
 use Model\ContractModel;
 
-include_once("../../../application/lib/autoload.php");
+include_once("../../application/lib/autoload.php");
 
 class ContractDAO extends BaseDAO
 {
@@ -57,7 +57,7 @@ class ContractDAO extends BaseDAO
      * @param $name
      * @return ContractModel
      */
-    public function selectId($id){
+    public function selectbyId($id){
         $query = "SELECT * FROM {$this->tableName} WHERE id like {$id}";
         $this->db->executeQuery($query);
         return $this->db->getResultAsObject(new ContractModel());
@@ -70,6 +70,43 @@ class ContractDAO extends BaseDAO
         $query = "SELECT * FROM {$this->tableName}";
         $this->db->executeQuery($query);
         return $this->db->getAllResultAsObject(new ContractModel());
+    }
+
+    /**
+     * @param ContractModel $contractModel
+     * @return false|int|null
+     */
+    public function updateUserInfo($id,$title,$borrorw,$payback,$price,$lender_id,$lender_name,$penalty,$alarm,$updated_at){
+
+        $penalty =  str_replace ("'", "\'",$penalty);
+
+        $query = "UPDATE {$this->tableName} SET title='{$title}', borrow_date='{$borrorw}',payback_date='{$payback}',
+                    price={$price}, lender_id = {$lender_id} , lender_name='{$lender_name}',penalty='{$penalty}',
+                    alarm={$alarm}, updated_at={$updated_at} where id={$id}";
+
+        $this->db->executeQuery($query);
+        return $this->db->getLastChangedRowNum();
+    }
+
+    /**
+     * @param ContractModel $contractModel
+     * @return false|int|null
+     */
+    public function updatePaybackState($id,$state){
+
+        $query = "UPDATE {$this->tableName} SET state={$state} where id={$id}";
+
+        $this->db->executeQuery($query);
+        return $this->db->getLastChangedRowNum();
+    }
+
+    /**
+     * @return ContractModel[]
+     */
+    public function delete($id){
+        $query = "delete from {$this->tableName} where id = {$id};";
+        $this->db->executeQuery($query);
+        return $this->db->getLastChangedRowNum();
     }
 
 }
