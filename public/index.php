@@ -42,7 +42,7 @@ switch ($method . ":" . $uriArray[1]) {
         $contractJson = $contractController->create(file_get_contents('php://input'));
         echo $contractJson;
         break;
-    case "GET:contractAll":
+    case "GET:contracts":
         $contractJson = $contractController->selectAll();
         echo $contractJson;
         break;
@@ -54,7 +54,7 @@ switch ($method . ":" . $uriArray[1]) {
         $contractJson = $contractController->update($uriArray);
         echo $contractJson;
         break;
-    case "PUT:contractComplete":
+    case "PUT:contract-complete":
         $contractJson = $contractController->updatepaybackState($uriArray);
         echo $contractJson;
         break;
