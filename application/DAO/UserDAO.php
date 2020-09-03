@@ -45,10 +45,10 @@ class UserDAO extends BaseDAO
      * @param $id string
      * @return UserModel
      */
-    public function selectmyidByID($id){ //회원가입 중복검사
+    public function selectByMyid ($id){ //회원가입 중복검사
         $query = "SELECT * FROM {$this->tableName} WHERE myid like '{$id}'";
         $this->db->executeQuery($query);
-        return $this->stmt->rowCount();
+        return $this->db->getResultAsObject(new UserModel());
     }
 
     /**
@@ -65,7 +65,7 @@ class UserDAO extends BaseDAO
      * @param $id
      * @return UserModel
      */
-    public function select($myid,$password){ //login
+    public function selectByMyIDAndPassword($myid,$password){ //login
         $query = "SELECT * FROM {$this->tableName} WHERE myid = '{$myid}' and password = '{$password}'";
         $this->db->executeQuery($query);
         return $this->db->getResultAsObject(new UserModel());

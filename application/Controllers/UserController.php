@@ -39,15 +39,15 @@ class UserController
 
         $myid = $userModel->getMyid();
 
-        $result = $userDAO->selectmyidByID($myid);
+        $userModel = $userDAO->selectByMyid($myid);
 
-        if ($result == 0) {
-            $data = ["result" => "true"];
+        if (empty($userModel)) {
+            $data = ["result" => "false",
+                "errorMessage" => "ID is alreay taken"];
 
             echo json_encode($data);
         } else {
-            $data = ["result" => "false",
-                "errorMessage" => "ID is alreay taken"];
+            $data = ["result" => "true"];
 
             echo json_encode($data);
         }
@@ -78,7 +78,7 @@ class UserController
         }
     }
 
-    public function select($uriArray)
+    public function selectByMyIDAndPassword($uriArray)
     {
         $userModel = new UserModel();
 
