@@ -8,7 +8,7 @@
 
 namespace Model;
 use Util\WebUtil;
-include_once("../../application/lib/autoload.php");
+include_once("../application/lib/autoload.php");
 
 abstract class BaseModel {
     function __construct() {

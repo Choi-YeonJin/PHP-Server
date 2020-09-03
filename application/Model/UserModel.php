@@ -7,9 +7,9 @@
  */
 
 namespace Model;
-include_once("../../application/lib/autoload.php");
+include_once("../application/lib/autoload.php");
 
-class UserModel extends BaseModel {
+class  UserModel extends BaseModel {
 
     /**
      * @var int
@@ -54,15 +54,15 @@ class UserModel extends BaseModel {
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
-     * @param int $id
+     * @param int|null $id
      */
-    public function setId(int $id): void
+    public function setId(?int $id): void
     {
         $this->id = $id;
     }
@@ -76,7 +76,7 @@ class UserModel extends BaseModel {
     }
 
     /**
-     * @param string $myid
+     * @param string|null $myid
      */
     public function setMyid(?string $myid): void
     {
@@ -92,7 +92,7 @@ class UserModel extends BaseModel {
     }
 
     /**
-     * @param string $password
+     * @param string|null $password
      */
     public function setPassword(?string $password): void
     {
@@ -108,7 +108,7 @@ class UserModel extends BaseModel {
     }
 
     /**
-     * @param string $name
+     * @param string|null $name
      */
     public function setName(?string $name): void
     {
@@ -118,15 +118,15 @@ class UserModel extends BaseModel {
     /**
      * @return string
      */
-    public function getImageUrl(): string
+    public function getImageUrl(): ?string
     {
         return $this->image_url;
     }
 
     /**
-     * @param string $image_url
+     * @param string|null $image_url
      */
-    public function setImageUrl(string $image_url): void
+    public function setImageUrl(?string $image_url): void
     {
         $this->image_url = $image_url;
     }
@@ -134,15 +134,15 @@ class UserModel extends BaseModel {
     /**
      * @return string
      */
-    public function getPhoneNum(): string
+    public function getPhoneNum(): ?string
     {
         return $this->phone_num;
     }
 
     /**
-     * @param string $phone_num
+     * @param string|null $phone_num
      */
-    public function setPhoneNum(string $phone_num): void
+    public function setPhoneNum(?string $phone_num): void
     {
         $this->phone_num = $phone_num;
     }
@@ -150,15 +150,15 @@ class UserModel extends BaseModel {
     /**
      * @return int
      */
-    public function getCreatedAt(): int
+    public function getCreatedAt(): ?int
     {
         return $this->created_at;
     }
 
     /**
-     * @param int $created_at
+     * @param int|null $created_at
      */
-    public function setCreatedAt(int $created_at): void
+    public function setCreatedAt(?int $created_at): void
     {
         $this->created_at = $created_at;
     }
@@ -166,33 +166,16 @@ class UserModel extends BaseModel {
     /**
      * @return int
      */
-    public function getUpdatedAt(): int
+    public function getUpdatedAt(): ?int
     {
         return $this->updated_at;
     }
 
     /**
-     * @param int $updated_at
+     * @param int|null $updated_at
      */
-    public function setUpdatedAt(int $updated_at): void
+    public function setUpdatedAt(?int $updated_at): void
     {
         $this->updated_at = $updated_at;
     }
-
-
-
-    public function updateModel(UserModel $userModel){
-        $updateCount = 0;
-        if(strcmp($this->name, $userModel->getName()) !== 0){
-            $updateCount++;
-            $this->setName($userModel->getName());
-        }
-    }
-
-
-
-
-
-
-
 }

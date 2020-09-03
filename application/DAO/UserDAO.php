@@ -9,7 +9,7 @@
 namespace DAO;
 use Model\UserModel;
 
-include_once("../../application/lib/autoload.php");
+include_once("../application/lib/autoload.php");
 
 class UserDAO extends BaseDAO
 {
@@ -26,23 +26,21 @@ class UserDAO extends BaseDAO
                     name,
                     image_url,
                     phone_num,
-                    created_at,
-                    updated_at 
+                    created_at
                     ) VALUES (
                     '{$userModel->getMyid()}',
                     '{$userModel->getPassword()}',
                     '{$userModel->getName()}',
                     '{$userModel->getImageUrl()}',
                     '{$userModel->getPhoneNum()}',
-                    {$userModel->getCreatedAt()},
-                    {$userModel->getUpdatedAt()})";
+                    {$userModel->getCreatedAt()})";
 
         $this->db->executeQuery($query);
         return $this->db->getInsertId();
     }
 
     /**
-     * @param $id string
+     * @param $id int
      * @return UserModel
      */
     public function selectByMyid ($id){ //회원가입 중복검사
@@ -52,7 +50,7 @@ class UserDAO extends BaseDAO
     }
 
     /**
-     * @param $id string
+     * @param $id int
      * @return UserModel
      */
     public function selectbyId($id){ // select
@@ -62,7 +60,8 @@ class UserDAO extends BaseDAO
     }
 
     /**
-     * @param $id
+     * @param $myid string
+     * @param $password string
      * @return UserModel
      */
     public function selectByMyIDAndPassword($myid,$password){ //login
@@ -81,16 +80,19 @@ class UserDAO extends BaseDAO
     }
 
     /**
-     * @return UserModel[]
+     * @param $id int
+     * @param UserModel $userModel
+     * @return int|null
      */
-    public function updateUserInfo($id,$name,$password){
-        $query = "UPDATE {$this->tableName} SET name='{$name}', password='{$password}' where id={$id}";
+    public function update($id,UserModel $userModel){
+        $query = "UPDATE {$this->tableName} SET name='{$userModel->getName()}', password='{$userModel->getPassword()}' where id={$id}";
         $this->db->executeQuery($query);
         return $this->stmt->rowCount();
     }
 
     /**
-     * @return UserModel[]
+     * @param $id int
+     * @return int|null
      */
     public function delete($id){
         $query = "delete from {$this->tableName} where id = {$id};";
