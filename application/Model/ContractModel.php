@@ -1,6 +1,6 @@
 <?php
 namespace Model;
-include_once("../../application/lib/autoload.php");
+include_once("../application/lib/autoload.php");
 
 class ContractModel extends BaseModel
 {
@@ -38,6 +38,16 @@ class ContractModel extends BaseModel
      * @var string
      */
     private $lender_name;
+
+    /**
+     * @var string
+     */
+    private $lender_bank;
+
+    /**
+     * @var int
+     */
+    private $lender_account;
 
     /**
      * @var string
@@ -174,6 +184,38 @@ class ContractModel extends BaseModel
     public function setLenderName(?string $lender_name): void
     {
         $this->lender_name = $lender_name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLenderBank(): ?string
+    {
+        return $this->lender_bank;
+    }
+
+    /**
+     * @param string $lender_bank
+     */
+    public function setLenderBank(?string $lender_bank): void
+    {
+        $this->lender_bank = $lender_bank;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLenderAccount(): ?int
+    {
+        return $this->lender_account;
+    }
+
+    /**
+     * @param int $lender_account
+     */
+    public function setLenderAccount(?int $lender_account): void
+    {
+        $this->lender_account = $lender_account;
     }
 
     /**

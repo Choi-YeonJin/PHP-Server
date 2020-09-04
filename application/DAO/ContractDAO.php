@@ -3,7 +3,7 @@
 namespace DAO;
 use Model\ContractModel;
 
-include_once("../../application/lib/autoload.php");
+include_once("../application/lib/autoload.php");
 
 class ContractDAO extends BaseDAO
 {
@@ -23,6 +23,8 @@ class ContractDAO extends BaseDAO
                     price,
                     lender_id,
                     lender_name,
+                    lender_bank,
+                    lender_account,
                     penalty,
                     alarm,
                     created_at,
@@ -34,6 +36,8 @@ class ContractDAO extends BaseDAO
                     {$contractModel->getPrice()},
                     {$contractModel->getLenderId()},
                     '{$contractModel->getLenderName()}',
+                    '{$contractModel->getLenderBank()}',
+                    {$contractModel->getLenderAccount()},
                     '{$penalty}',
                     {$contractModel->getAlarm()},
                     {$contractModel->getCreatedAt()},
