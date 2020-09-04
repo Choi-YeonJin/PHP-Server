@@ -39,22 +39,28 @@ switch ($method . ":" . $uriArray[1]) {
     case "DELETE:user":
         $userController->delete($uriArray);
     case "POST:contract":
-        $contractController->create(file_get_contents('php://input'));
+        $contractJson = $contractController->create(file_get_contents('php://input'));
+        echo $contractJson;
         break;
-    case "GET:contractAll":
-        $contractController->selectAll();
+    case "GET:contracts":
+        $contractJson = $contractController->selectAll();
+        echo $contractJson;
         break;
     case "GET:contract":
-        $contractController->select($uriArray);
+        $contractJson = $contractController->select($uriArray);
+        echo $contractJson;
         break;
     case "PUT:contract":
-        $contractController->update($uriArray);
+        $contractJson = $contractController->update($uriArray);
+        echo $contractJson;
         break;
-    case "PUT:contractComplete":
-        $contractController->updatepaybackState($uriArray);
+    case "PUT:contract-complete":
+        $contractJson = $contractController->updatepaybackState($uriArray);
+        echo $contractJson;
         break;
     case "DELETE:contract":
-        $contractController->delete($uriArray);
+        $contractJson = $contractController->delete($uriArray);
+        echo $contractJson;
         break;
     default:
         break;
