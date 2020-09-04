@@ -5,7 +5,7 @@ namespace Controllers;
 use Model\UserModel;
 use DAO\UserDAO;
 
-include_once("../../application/lib/autoload.php");
+include_once("../application/lib/autoload.php");
 
 //error_reporting(E_ALL);
 //ini_set("display_errors", 1);
@@ -144,6 +144,33 @@ class UserController
             return json_encode($data);
         }
 
+    }
+
+    public function createBankAndAccount($uriArray) //POST bank-registration : 유저 계좌 정보 등록
+    {
+        $userModel = new UserModel();
+        $userModel->setByArray(json_decode(file_get_contents('php://input'))); // body에 담긴 data 객체에 맞게끔 변형, data set
+
+        $userDAO = new UserDAO();
+
+        if(!empty($uriArray[2])){ // 파라미터 유효성 검사
+            $result = $userDAO->updateBankAndAccount($uriArray[2],$userModel);
+            if (!empty($result)) { // 유저 비밀번호, 이름 업데이트 성공
+                $data = ["result" => true];
+
+                return json_encode($data);
+            } else { // 잘못된 파라미터값
+                $data = ["result" => false,
+                    "errorMessage" => "id is Not Found "]; //존재하지 않는 id
+
+                return json_encode($data);
+            }
+        }else{ // 파라미터값 is null
+            $data = ["result" => false,
+                "errorMessage" => "parameter is null"]; //수정할 유저 id값이 안넘어왔을 때
+
+            return json_encode($data);
+        }
     }
 
     public function delete($uriArray) //DELETE user : 유저 삭제

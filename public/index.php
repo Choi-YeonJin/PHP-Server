@@ -5,8 +5,8 @@ use Controllers\ContractController;
 
 include_once ("../application/lib/autoload.php");
 
-//error_reporting(E_ALL);
-//ini_set("display_errors", 1);
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
 
 $userController = new UserController();
 $contractController = new ContractController();
@@ -40,6 +40,10 @@ switch ($method . ":" . $uriArray[1]) {
         break;
     case "PUT:user":
         $userJson = $userController->update($uriArray);
+        echo $userJson;
+        break;
+    case "PUT:bank-registration":
+        $userJson = $userController->createBankAndAccount($uriArray);
         echo $userJson;
         break;
     case "DELETE:user":

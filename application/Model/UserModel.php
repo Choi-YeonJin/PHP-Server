@@ -42,6 +42,16 @@ class  UserModel extends BaseModel {
     private $phone_num;
 
     /**
+     * @var string
+     */
+    private $bank;
+
+    /**
+     * @var int
+     */
+    private $account;
+
+    /**
      * @var int
      */
     private $created_at;
@@ -145,6 +155,38 @@ class  UserModel extends BaseModel {
     public function setPhoneNum(?string $phone_num): void
     {
         $this->phone_num = $phone_num;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBank(): ?string
+    {
+        return $this->bank;
+    }
+
+    /**
+     * @param string|null $bank
+     */
+    public function setBank(?string $bank): void
+    {
+        $this->bank = $bank;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAccount(): ?int
+    {
+        return $this->account;
+    }
+
+    /**
+     * @param int|null $account
+     */
+    public function setAccount(?int $account): void
+    {
+        $this->account = $account;
     }
 
     /**

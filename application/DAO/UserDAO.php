@@ -92,6 +92,17 @@ class UserDAO extends BaseDAO
 
     /**
      * @param $id int
+     * @param UserModel $userModel
+     * @return false|int|null
+     */
+    public function updateBankAndAccount($id, UserModel $userModel){
+        $query = "UPDATE {$this->tableName} SET bank='{$userModel->getBank()}', account='{$userModel->getAccount()}' where id={$id}";
+        $this->db->executeQuery($query);
+        return $this->stmt->rowCount();
+    }
+
+    /**
+     * @param $id int
      * @return int|null
      */
     public function delete($id){
