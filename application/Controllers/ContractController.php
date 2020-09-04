@@ -5,7 +5,7 @@ namespace Controllers;
 use Model\ContractModel;
 use DAO\ContractDAO;
 
-include_once("../../application/lib/autoload.php");
+include_once("../application/lib/autoload.php");
 
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
@@ -24,7 +24,6 @@ class ContractController
         $contractDAO = new ContractDAO();
 
         $contractId =  $contractDAO->insert($contractModel);
-
         if($contractId != 0){
             $data = ["result" => "true",
                 "contractId" => "{$contractId}"];

@@ -51,22 +51,28 @@ switch ($method . ":" . $uriArray[1]) {
         echo $userJson;
         break;
     case "POST:contract":
-        $contractController->create(file_get_contents('php://input'));
+        $contractJson = $contractController->create(file_get_contents('php://input'));
+        echo $contractJson;
         break;
     case "GET:contracts":
-        $contractController->selectAll();
+        $contractJson = $contractController->selectAll();
+        echo $contractJson;
         break;
     case "GET:contract":
-        $contractController->select($uriArray);
+        $contractJson = $contractController->select($uriArray);
+        echo $contractJson;
         break;
     case "PUT:contract":
-        $contractController->update($uriArray);
+        $contractJson = $contractController->update($uriArray);
+        echo $contractJson;
         break;
     case "PUT:contract-complete":
-        $contractController->updatepaybackState($uriArray);
+        $contractJson = $contractController->updatepaybackState($uriArray);
+        echo $contractJson;
         break;
     case "DELETE:contract":
-        $contractController->delete($uriArray);
+        $contractJson = $contractController->delete($uriArray);
+        echo $contractJson;
         break;
     default:
         break;
