@@ -3,7 +3,7 @@
 use Controllers\UserController;
 use Controllers\ContractController;
 
-include_once ("../../application/lib/autoload.php");
+include_once ("../application/lib/autoload.php");
 
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
@@ -14,8 +14,6 @@ $contractController = new ContractController();
 $method = $_SERVER["REQUEST_METHOD"];
 $uri = $_SERVER["REQUEST_URI"];
 $uriArray = explode("/", $uri);
-
-$userController = new UserController();
 
 switch ($method . ":" . $uriArray[1]) {
     case "GET:user":

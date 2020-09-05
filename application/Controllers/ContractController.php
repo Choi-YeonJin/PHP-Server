@@ -3,7 +3,9 @@
 namespace Controllers;
 
 use Model\ContractModel;
+use Model\BorrowerModel;
 use DAO\ContractDAO;
+use DAO\BorrowerDAO;
 
 include_once("../application/lib/autoload.php");
 
@@ -16,39 +18,60 @@ class ContractController
     {
         $contractModel = new ContractModel();
         $contractDAO = new ContractDAO();
+
+        $borrowerModel = new BorrowerModel();
+        $borrowerDAO = new BorrowerDAO();
+
         $contractModel->setByArray(json_decode($data)); // 요청받은 파라미터를 객체에 맞게끔 변형, data set
         $contractModel->setCreatedAt(time()); // 시간은 서버 시간으로 세팅
-        $contractModel->setUpdatedAt(time()); // 시간은 서버 시간으로 세팅
-        $contractModel->setState(0); // 시간은 서버 시간으로 세팅
+        $contractModel->setState(0);// 계약서 완료 여부 (defaul=0)
 
-        $contractDAO = new ContractDAO();
+        $B = json_decode($data,true);
+        $borrowerNum = count($B['borrower']); //빌리는 사람 수
+        for($i=0; $i<$borrowerNum; $i++){
+            $borrower = $B['borrower'][$i];
+            $borrowerModel->setByArray($borrower);
+            $borrowerModel->setCreatedAt(time());
+            $borrowerModel->setPaybackState(0);
 
-        $contractId =  $contractDAO->insert($contractModel);
-        if($contractId != 0){
-            $data = ["result" => "true",
-                "contractId" => "{$contractId}"];
+            $borrowerDAO->insert($borrowerModel); //borrower 테이블 insert
 
-            echo json_encode($data);
-        }else{
-            $data = ["result" => "false"];
-
-            echo json_encode($data);
         }
-    }
 
+        $contractId = $contractDAO->insert($contractModel); // contract 테이블 insert
+
+        $userId = $B['user_id'];//작성한 user_id
+        $data = ["result" => true,
+            "userId" => "{$userId}",
+            "contractId" => "{$contractId}"];
+
+        return json_encode($data);
+    }
 
     public function select($uriArray)
     {
-        $contractModel = new contractModel();
-
         $contractDAO = new contractDAO();
-        if($uriArray[2])
-        {
-            var_export($contractDAO->selectbyId($uriArray[2])); // id로 단일 검색
-        }else{
-            $data = ["result" => "false",
-                "errorMessage" => "URL parameter is Not Found"];
-            echo json_encode($data, JSON_UNESCAPED_UNICODE)."<br>";
+
+        if (!empty($uriArray[2])) { // 파라미터 값 유효성 검사
+            $result = $contractDAO->selectbyId($uriArray[2]);
+            if (!empty($result)) { // 조회 성공
+                $data = ["id" => "{$result->getId()}",
+                    "myid" => "{$result->getMyid()}",
+                    "password" => "{$result->getPassword()}",
+                    "name" => "{$result->getName()}",
+                    "imageUrl" => "{$result->getImageUrl()}",
+                    "phoneNum" => "{$result->getPhoneNum()}"];
+                return json_encode($data, JSON_UNESCAPED_UNICODE);
+            } else { // 조회 실패
+                $data = ["result" => false];
+
+                return json_encode($data);
+            }
+        } else { // 파라미터 값 is null
+            $data = ["result" => false,
+                "errorMessage" => "parameter is null"]; //조회할 유저 id값이 안넘어왔을 때
+
+            return json_encode($data);
         }
 
     }
@@ -67,7 +90,7 @@ class ContractController
                 "Price" => "{$contractModel->getPrice()}",
                 "Lender_name" => "{$contractModel->getLenderName()}",
                 "Penalty" => "{$contractModel->getPenalty()}"];
-            echo json_encode($data, JSON_UNESCAPED_UNICODE)."<br>";
+            return json_encode($data, JSON_UNESCAPED_UNICODE) . "<br>";
         }
     }
 
@@ -89,22 +112,22 @@ class ContractController
         $alarm = $contractModel->getAlarm();
         $updated_at = $contractModel->getUpdatedAt();
 
-        if($uriArray[2]){
-            $result = $contractDAO->updateUserInfo($uriArray[2],$title,$borrorw_date,$payback_date,$price,$lender_id,$lender_name,$penalty,$alarm,$updated_at);
+        if ($uriArray[2]) {
+            $result = $contractDAO->updateUserInfo($uriArray[2], $title, $borrorw_date, $payback_date, $price, $lender_id, $lender_name, $penalty, $alarm, $updated_at);
             if ($result > 0) {
                 $data = ["result" => "true"];
 
-                echo json_encode($data);
+                return json_encode($data);
             } else {
                 $data = ["result" => "false",
-                "errorMessage"=>"something data is null"];
+                    "errorMessage" => "something data is null"];
 
-                echo json_encode($data);
+                return json_encode($data);
             }
-        }else{
+        } else {
             $data = ["result" => "false",
                 "errorMessage" => "URL parameter is Not Found"];
-            echo json_encode($data, JSON_UNESCAPED_UNICODE)."<br>";
+            return json_encode($data, JSON_UNESCAPED_UNICODE) . "<br>";
         }
     }
 
@@ -117,25 +140,24 @@ class ContractController
 
         $state = $contractModel->getState();
 
-        if($uriArray[2]){
-            $result = $contractDAO->updatePaybackState($uriArray[2],$state);
+        if ($uriArray[2]) {
+            $result = $contractDAO->updatePaybackState($uriArray[2], $state);
             if ($result > 0) {
                 $data = ["result" => "true"];
 
-                echo json_encode($data);
+                return json_encode($data);
             } else {
                 $data = ["result" => "false",
-                    "errorMessage"=>"something data is null"];
+                    "errorMessage" => "something data is null"];
 
-                echo json_encode($data);
+                return json_encode($data);
             }
-        }else{
+        } else {
             $data = ["result" => "false",
                 "errorMessage" => "URL parameter is Not Found"];
-            echo json_encode($data, JSON_UNESCAPED_UNICODE)."<br>";
+            return json_encode($data, JSON_UNESCAPED_UNICODE) . "<br>";
         }
     }
-
 
     public function delete($uriArray)
     {
@@ -147,12 +169,12 @@ class ContractController
         if ($result != 0) {
             $data = ["result" => "true"];
 
-            echo json_encode($data);
+            return json_encode($data);
         } else {
             $data = ["result" => "false",
                 "errorMessage" => "URL parameter is Not Found"];
 
-            echo json_encode($data);
+            return json_encode($data);
         }
     }
 }

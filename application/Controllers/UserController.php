@@ -5,7 +5,7 @@ namespace Controllers;
 use Model\UserModel;
 use DAO\UserDAO;
 
-include_once("../../application/lib/autoload.php");
+include_once("../application/lib/autoload.php");
 
 error_reporting(E_ALL);
 ini_set("display_errors", 1);

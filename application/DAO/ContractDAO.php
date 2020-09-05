@@ -27,8 +27,7 @@ class ContractDAO extends BaseDAO
                     lender_account,
                     penalty,
                     alarm,
-                    created_at,
-                    updated_at
+                    created_at
                     ) VALUES (
                     '{$contractModel->getTitle()}',
                     '{$contractModel->getBorrowDate()}',
@@ -40,8 +39,7 @@ class ContractDAO extends BaseDAO
                     {$contractModel->getLenderAccount()},
                     '{$penalty}',
                     {$contractModel->getAlarm()},
-                    {$contractModel->getCreatedAt()},
-                    {$contractModel->getUpdatedAt()})";
+                    {$contractModel->getCreatedAt()})";
 
         $this->db->executeQuery($query);
         return $this->db->getInsertId();
