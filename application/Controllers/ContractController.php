@@ -110,7 +110,7 @@ class ContractController
         }
     }
 
-    public function selectAllBorrower($contract_id) //GET contacts : 전체 계약서 조회
+    public function selectAllBorrower($contract_id) //select : contract_id를 가진 borrower 전체 조회
     {
         $borrowerDAO = new BorrowerDAO();
 
