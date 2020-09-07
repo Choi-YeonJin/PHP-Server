@@ -108,7 +108,7 @@ class UserDAO extends BaseDAO
     public function delete($id){
         $query = "delete from {$this->tableName} where id = {$id};";
         $this->db->executeQuery($query);
-        return $this->stmt->rowCount();
+        return $this->stmt->rowCount();  
     }
 
 }
