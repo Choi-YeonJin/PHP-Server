@@ -29,8 +29,43 @@ class BorrowerDAO extends BaseDAO
                     {$borrowerModel->getPaybackState()},
                     {$borrowerModel->getCreatedAt()})";
 
+//        $this->db->executeQuery($query);
+//        return $this->db->getInsertId();
+        echo $query;
+    }
+
+    /**
+     * @param BorrowerModel $borrowerModel
+     * @return false|int|null
+     */
+    public function insertBycontractId(BorrowerModel $borrowerModel){
+        $query = "INSERT INTO {$this->tableName} (
+                    contract_id,
+                    borrower_id,
+                    user_name,
+                    price,
+                    payback_state,
+                    updated_at
+                    ) VALUES (
+                    {$borrowerModel->getContractId()},
+                    {$borrowerModel->getBorrowerId()},
+                    '{$borrowerModel->getUserName()}',
+                    {$borrowerModel->getPrice()},
+                    {$borrowerModel->getPaybackState()},
+                    {$borrowerModel->getUpdatedAt()})";
+
         $this->db->executeQuery($query);
         return $this->db->getInsertId();
+    }
+
+    /**
+     * @param $contract_id int
+     * @return int|null
+     */
+    public function delete($contract_id){
+        $query = "delete from {$this->tableName} where contract_id = {$contract_id}";
+        $this->db->executeQuery($query);
+        return $this->stmt->rowCount();
     }
 
 }

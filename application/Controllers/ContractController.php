@@ -44,6 +44,7 @@ class ContractController
                 $borrowerModel->setByArray($borrower);
                 $borrowerModel->setCreatedAt(time());
                 $borrowerModel->setPaybackState(0);
+                $borrowerModel->setContractId($contractId);
 
                 $borrowerId = $borrowerDAO->insert($borrowerModel); //borrower 테이블 insert
 
@@ -106,8 +107,8 @@ class ContractController
         $contractModel = new contractModel();
         $contractDAO = new contractDAO();
 
-        $userList = $contractDAO->selectAll(); // 전체 리스트 select
-        foreach ($userList as $contractModel) {
+        $contractList = $contractDAO->selectAll(); // 전체 리스트 select
+        foreach ($contractList as $contractModel) {
             $data = ["id" => "{$contractModel->getId()}",
                 "Title" => "{$contractModel->getTitle()}",
                 "Borrow_date" => "{$contractModel->getBorrowDate()}",
@@ -122,37 +123,58 @@ class ContractController
     public function update($uriArray) //PUT contract : 계약서 수정
     {
         $contractModel = new contractModel();
-        $contractModel->setByArray(json_decode(file_get_contents('php://input'))); // 요청받은 파라미터를 객체에 맞게끔 변형, data set
-        $contractModel->setUpdatedAt(time());
-
         $contractDAO = new contractDAO();
 
-        $title = $contractModel->getTitle();
-        $borrorw_date = $contractModel->getBorrowDate();
-        $payback_date = $contractModel->getPaybackDate();
-        $price = $contractModel->getPrice();
-        $lender_id = $contractModel->getLenderId();
-        $lender_name = $contractModel->getLenderName();
-        $penalty = $contractModel->getPenalty();
-        $alarm = $contractModel->getAlarm();
-        $updated_at = $contractModel->getUpdatedAt();
+        $borrowerModel = new BorrowerModel();
+        $borrowerDAO = new BorrowerDAO();
 
-        if ($uriArray[2]) {
-            $result = $contractDAO->updateUserInfo($uriArray[2], $title, $borrorw_date, $payback_date, $price, $lender_id, $lender_name, $penalty, $alarm, $updated_at);
-            if ($result > 0) {
-                $data = ["result" => "true"];
+        $data = json_decode(file_get_contents('php://input'),true);
+        $contractModel->setByArray($data); // 요청받은 파라미터를 객체에 맞게끔 변형, data set
+        $contractModel->setUpdatedAt(time());
+
+        if (!empty($uriArray[2])) { // 정상적인 파라미터 값
+
+            $result = $contractDAO->updateContractInfo($uriArray[2],$contractModel);
+
+            if (!empty($result)) { // 정상적인 contract update
+
+                $borrowerNum = count($data['borrower']); //빌리는 사람 수
+
+                $borrowerDAO->delete($uriArray[2]); // borrower에서 현재 수정중인 contract_id를 가진 컬럼 모두 삭제
+
+                for ($i = 0; $i < $borrowerNum; $i++) { //빌리는 사람 수만큼 insert
+                    $borrower = $data['borrower'][$i];
+
+                    if (empty($borrower['borrower_id'])) // 비회원인 경우, 관리자 유저 id값을 넣어줌
+                    {
+                        $borrower['borrower_id'] = 41;
+                    }
+                    $borrowerModel->setByArray($borrower);
+                    $borrowerModel->setUpdatedAt(time());
+                    $borrowerModel->setContractId($uriArray[2]);
+                    $borrowerModel->setPaybackState(0);
+
+                    $borrowerId = $borrowerDAO->insertBycontractId($borrowerModel); //borrower 테이블 insert
+                    if (empty($borrowerId)) { // borrower insert 실패
+                        $data = ["result" => false,
+                            "errorMessage" => "contract_id or borrower_id is Not Found"];
+
+                        return json_encode($data);
+                    }
+                }
+                $data = ["result" => true];
 
                 return json_encode($data);
             } else {
-                $data = ["result" => "false",
-                    "errorMessage" => "something data is null"];
+                $data = ["result" => false,
+                    "errorMessage" => "id is Not Found"];
 
                 return json_encode($data);
             }
         } else {
-            $data = ["result" => "false",
-                "errorMessage" => "URL parameter is Not Found"];
-            return json_encode($data, JSON_UNESCAPED_UNICODE) . "<br>";
+            $data = ["result" => false,
+                "errorMessage" => "parameter is null"];
+            return json_encode($data, JSON_UNESCAPED_UNICODE);
         }
     }
 
