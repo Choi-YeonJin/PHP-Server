@@ -14,7 +14,7 @@ ini_set("display_errors", 1);
 
 class ContractController
 {
-    public function create($data)
+    public function create($data) //POST contract : 계약서 insert
     {
         $contractModel = new ContractModel();
         $contractDAO = new ContractDAO();
@@ -26,29 +26,54 @@ class ContractController
         $contractModel->setCreatedAt(time()); // 시간은 서버 시간으로 세팅
         $contractModel->setState(0);// 계약서 완료 여부 (defaul=0)
 
-        $B = json_decode($data,true);
-        $borrowerNum = count($B['borrower']); //빌리는 사람 수
-        for($i=0; $i<$borrowerNum; $i++){
-            $borrower = $B['borrower'][$i];
-            $borrowerModel->setByArray($borrower);
-            $borrowerModel->setCreatedAt(time());
-            $borrowerModel->setPaybackState(0);
-
-            $borrowerDAO->insert($borrowerModel); //borrower 테이블 insert
-
-        }
-
         $contractId = $contractDAO->insert($contractModel); // contract 테이블 insert
 
-        $userId = $B['user_id'];//작성한 user_id
-        $data = ["result" => true,
-            "userId" => "{$userId}",
-            "contractId" => "{$contractId}"];
+        if ($contractId > 0) { // 성공적인 계약서 insert
+            $B = json_decode($data, true);
 
-        return json_encode($data);
+            $borrowerNum = count($B['borrower']); //빌리는 사람 수
+
+            for ($i = 0; $i < $borrowerNum; $i++) { //빌리는 사람 수만큼 insert
+
+                $borrower = $B['borrower'][$i];
+
+                if (empty($borrower['borrower_id'])) // 비회원인 경우, 관리자 유저 id값을 넣어줌
+                {
+                    $borrower['borrower_id'] = 41;
+                }
+                $borrowerModel->setByArray($borrower);
+                $borrowerModel->setCreatedAt(time());
+                $borrowerModel->setPaybackState(0);
+
+                $borrowerId = $borrowerDAO->insert($borrowerModel); //borrower 테이블 insert
+
+                if ($borrowerId == 0) { // borrower insert 실패
+                    $data = ["result" => false,
+                        "errorMessage" => "contract_id or borrower_id is Not Found"];
+
+                    return json_encode($data);
+                }
+
+            }
+
+            $userId = $B['user_id'];//작성한 user의 id
+
+            $data = ["result" => true,
+                "userId" => "{$userId}",
+                "contractId" => "{$contractId}"];
+
+            return json_encode($data);
+        } else {
+            $data = ["result" => false,
+                "errorMessage" => "lender_id is Not Found"];
+
+            return json_encode($data);
+        }
+
+
     }
 
-    public function select($uriArray)
+    public function select($uriArray) //GET contract : 계약서 조회
     {
         $contractDAO = new contractDAO();
 
@@ -76,7 +101,7 @@ class ContractController
 
     }
 
-    public function selectAll()
+    public function selectAll() //GET contacts : 전체 계약서 조회
     {
         $contractModel = new contractModel();
         $contractDAO = new contractDAO();
@@ -94,7 +119,7 @@ class ContractController
         }
     }
 
-    public function update($uriArray)
+    public function update($uriArray) //PUT contract : 계약서 수정
     {
         $contractModel = new contractModel();
         $contractModel->setByArray(json_decode(file_get_contents('php://input'))); // 요청받은 파라미터를 객체에 맞게끔 변형, data set
@@ -131,7 +156,7 @@ class ContractController
         }
     }
 
-    public function updatepaybackState($uriArray)
+    public function updatepaybackState($uriArray) //PUT contract-complete : 계약서 완료
     {
         $contractModel = new contractModel();
         $contractModel->setState(1);
@@ -159,22 +184,30 @@ class ContractController
         }
     }
 
-    public function delete($uriArray)
+    public function delete($uriArray) // DELETE contract : 계약서 삭제
     {
-        $contractModel = new contractModel();
-
         $contractDAO = new contractDAO();
 
-        $result = $contractDAO->delete($uriArray[2]); // id로 단일 검색
-        if ($result != 0) {
-            $data = ["result" => "true"];
+        if (!empty($uriArray[2])) { // 파라미터 유효성 검사
+
+            $result = $contractDAO->delete($uriArray[2]);
+
+            if (!empty($result)) { //정상적으로 delete
+                $data = ["result" => true];
+
+                return json_encode($data);
+            } else { // 잘못된 파라미터 값
+                $data = ["result" => false,
+                    "errorMessage" => "id is Not Found"]; //존재하지 않는 id
+
+                return json_encode($data);
+            }
+        } else { //파라미터값 is null
+            $data = ["result" => false,
+                "errorMessage" => "parameter is null"]; //삭제할 유저 id값이 안넘어왔을 때
 
             return json_encode($data);
-        } else {
-            $data = ["result" => "false",
-                "errorMessage" => "URL parameter is Not Found"];
 
-            return json_encode($data);
         }
     }
 }

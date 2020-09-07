@@ -87,7 +87,7 @@ class ContractDAO extends BaseDAO
                     alarm={$alarm}, updated_at={$updated_at} where id={$id}";
 
         $this->db->executeQuery($query);
-        return $this->db->getLastChangedRowNum();
+        return $this->stmt->rowCount();
     }
 
     /**
@@ -99,16 +99,17 @@ class ContractDAO extends BaseDAO
         $query = "UPDATE {$this->tableName} SET state={$state} where id={$id}";
 
         $this->db->executeQuery($query);
-        return $this->db->getLastChangedRowNum();
+        return $this->stmt->rowCount();
     }
 
     /**
-     * @return ContractModel[]
+     * @param $id int
+     * @return int|null
      */
     public function delete($id){
         $query = "delete from {$this->tableName} where id = {$id};";
         $this->db->executeQuery($query);
-        return $this->db->getLastChangedRowNum();
+        return $this->stmt->rowCount();
     }
 
 }

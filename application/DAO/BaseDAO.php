@@ -10,7 +10,7 @@ namespace DAO;
 use PDO;
 use PDOException;
 
-include_once("../../application/lib/autoload.php");
+include_once("../application/lib/autoload.php");
 
 class BaseDAO
 {
@@ -132,21 +132,6 @@ class BaseDAO
         } else {
             try {
                 return $this->pdo->lastInsertId();
-            } catch (PDOException $e) {
-                $this->error = $e->getMessage();
-                return false;
-            }
-        }
-    }
-    /**
-     * @return int|false|null
-     */
-    public function getLastChangedRowNum() {
-        if (empty($this->stmt)) {
-            return null;
-        } else {
-            try {
-                return $this->stmt->rowCount();
             } catch (PDOException $e) {
                 $this->error = $e->getMessage();
                 return false;
