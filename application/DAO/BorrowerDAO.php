@@ -59,6 +59,26 @@ class BorrowerDAO extends BaseDAO
     }
 
     /**
+     * @param $contract_id
+     * @return BorrowerModel
+     */
+    public function selectByContractId($contract_id){
+        $query = "SELECT * FROM {$this->tableName} WHERE contract_id like {$contract_id}";
+        $this->db->executeQuery($query);
+        return $this->db->getAllResultAsObject(new BorrowerModel());
+    }
+
+    /**
+     * @param $name
+     * @return BorrowerModel
+     */
+    public function selectbyId($id){
+        $query = "SELECT * FROM {$this->tableName} WHERE id like {$id}";
+        $this->db->executeQuery($query);
+        return $this->db->getResultAsObject(new BorrowerModel());
+    }
+
+    /**
      * @param $contract_id int
      * @return int|null
      */

@@ -80,14 +80,23 @@ class ContractController
 
         if (!empty($uriArray[2])) { // 파라미터 값 유효성 검사
             $result = $contractDAO->selectbyId($uriArray[2]);
+            $borrowerList = $this->selectAllBorrower($result->getId());
             if (!empty($result)) { // 조회 성공
-                $data = ["id" => "{$result->getId()}",
-                    "myid" => "{$result->getMyid()}",
-                    "password" => "{$result->getPassword()}",
-                    "name" => "{$result->getName()}",
-                    "imageUrl" => "{$result->getImageUrl()}",
-                    "phoneNum" => "{$result->getPhoneNum()}"];
-                return json_encode($data, JSON_UNESCAPED_UNICODE);
+                $data = ["title" => "{$result->getTitle()}",
+                    "borrow_date" => "{$result->getBorrowDate()}",
+                    "payback_date" => "{$result->getPaybackDate()}",
+                    "price" => "{$result->getPrice()}",
+                    "lender_name" => "{$result->getLenderName()}",
+                    "lender_bank" => "{$result->getLenderBank()}",
+                    "lender_account" => "{$result->getLenderAccount()}",
+                    "borrower" => $borrowerList,
+                    "penalty" => "{$result->getPenalty()}",
+                    "alarm" => "{$result->getAlarm()}",
+                    "state" => "{$result->getState()}"];
+
+                $contractList =  json_encode($data, JSON_UNESCAPED_UNICODE);
+
+                return $contractList;
             } else { // 조회 실패
                 $data = ["result" => false];
 
@@ -99,25 +108,37 @@ class ContractController
 
             return json_encode($data);
         }
+    }
 
+    public function selectAllBorrower($contract_id) //GET contacts : 전체 계약서 조회
+    {
+        $borrowerDAO = new BorrowerDAO();
+
+        $borrowerList = $borrowerDAO->selectByContractId($contract_id); // contract_id를 가진 borrower selcet
+
+        $borrorwerJson = array(); // contract_id를 가진 borrower 조회할 배열 선언
+        foreach ($borrowerList as $borrowerModel) {
+            $data = $borrowerModel->getArray();
+            array_push($borrorwerJson, $data); // 위에 선언한 배열에 값 추가
+        }
+
+        return $borrorwerJson;
+//        return json_encode($borrorwerJson, JSON_UNESCAPED_UNICODE); //JSON_UNESCAPED_UNICODE : 한국어 패치
     }
 
     public function selectAll() //GET contacts : 전체 계약서 조회
     {
-        $contractModel = new contractModel();
-        $contractDAO = new contractDAO();
+        $contractDAO = new ContractDAO();
 
         $contractList = $contractDAO->selectAll(); // 전체 리스트 select
+
+        $contractJson = array(); // 전체 유저 조회할 배열 선언
         foreach ($contractList as $contractModel) {
-            $data = ["id" => "{$contractModel->getId()}",
-                "Title" => "{$contractModel->getTitle()}",
-                "Borrow_date" => "{$contractModel->getBorrowDate()}",
-                "Payback_date" => "{$contractModel->getPaybackDate()}",
-                "Price" => "{$contractModel->getPrice()}",
-                "Lender_name" => "{$contractModel->getLenderName()}",
-                "Penalty" => "{$contractModel->getPenalty()}"];
-            return json_encode($data, JSON_UNESCAPED_UNICODE) . "<br>";
+            $data = $contractModel->getArray();
+            array_push($contractJson, $data); // 위에 선언한 배열에 값 추가
         }
+
+        return json_encode($contractJson, JSON_UNESCAPED_UNICODE); //JSON_UNESCAPED_UNICODE : 한국어 패치
     }
 
     public function update($uriArray) //PUT contract : 계약서 수정
