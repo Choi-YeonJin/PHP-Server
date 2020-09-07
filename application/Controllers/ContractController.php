@@ -165,22 +165,22 @@ class ContractController
 
         $state = $contractModel->getState();
 
-        if ($uriArray[2]) {
+        if (!empty($uriArray[2])) {
             $result = $contractDAO->updatePaybackState($uriArray[2], $state);
-            if ($result > 0) {
-                $data = ["result" => "true"];
+            if (!empty($result)) {
+                $data = ["result" => true];
 
                 return json_encode($data);
             } else {
-                $data = ["result" => "false",
-                    "errorMessage" => "something data is null"];
+                $data = ["result" => false,
+                    "errorMessage" => "id is Not Found"];
 
                 return json_encode($data);
             }
         } else {
-            $data = ["result" => "false",
-                "errorMessage" => "URL parameter is Not Found"];
-            return json_encode($data, JSON_UNESCAPED_UNICODE) . "<br>";
+            $data = ["result" => false,
+                "errorMessage" => "parameter is Not Found"];
+            return json_encode($data, JSON_UNESCAPED_UNICODE);
         }
     }
 
