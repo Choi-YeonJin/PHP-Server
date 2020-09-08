@@ -1,57 +1,93 @@
-<?
+<?php
 
 namespace DAO;
 use Model\BorrowerModel;
 
-include_once("application/lib/autoload.php");
+include_once("../application/lib/autoload.php");
 
 class BorrowerDAO extends BaseDAO
 {
-    protected $tableName = "user";
-
-//    param phonenumber
-//
-//
-//
-//    selectbyphonenumber
+    protected $tableName = "borrower";
 
     /**
-     * @param ContractModel $ConractModel
+     * @param BorrowerModel $borrowerModel
      * @return false|int|null
      */
-    public function insert(ContractModel $ContractModel){
+    public function insert(BorrowerModel $borrowerModel){
         $query = "INSERT INTO {$this->tableName} (
-                    title,
-                    borrowDate,
-                    paybackDate,
+                    contract_id,
+                    borrower_id,
+                    user_name,
                     price,
-                    userId,
-                    userName,
-                    penalty,
-                    alarm,
-                    state,
-                    createdAt
+                    payback_state,
+                    created_at
                     ) VALUES (
-                    '{$ContractModel->getTitle()}',
-                    '{$ContractModel->getBorrowDate()}',
-                    '{$ContractModel->getPaybackDate()}',
-                    '{$ContractModel->getPrice()}',
-                    {$ContractModel->getUserId()},
-                    '{$ContractModel->getUserName()}'
-                    '{$ContractModel->getPenalty()}'
-                    '{$ContractModel->getAlarm()}',
-                    '{$ContractModel->getState()}'
-                    {$ContractModel->getCreatedAt()})";
+                    {$borrowerModel->getContractId()},
+                    {$borrowerModel->getBorrowerId()},
+                    '{$borrowerModel->getUserName()}',
+                    {$borrowerModel->getPrice()},
+                    {$borrowerModel->getPaybackState()},
+                    {$borrowerModel->getCreatedAt()})";
+
+//        $this->db->executeQuery($query);
+//        return $this->db->getInsertId();
+        echo $query;
+    }
+
+    /**
+     * @param BorrowerModel $borrowerModel
+     * @return false|int|null
+     */
+    public function insertBycontractId(BorrowerModel $borrowerModel){
+        $query = "INSERT INTO {$this->tableName} (
+                    contract_id,
+                    borrower_id,
+                    user_name,
+                    price,
+                    payback_state,
+                    updated_at
+                    ) VALUES (
+                    {$borrowerModel->getContractId()},
+                    {$borrowerModel->getBorrowerId()},
+                    '{$borrowerModel->getUserName()}',
+                    {$borrowerModel->getPrice()},
+                    {$borrowerModel->getPaybackState()},
+                    {$borrowerModel->getUpdatedAt()})";
 
         $this->db->executeQuery($query);
         return $this->db->getInsertId();
     }
 
-    public function selectbyMyid($name){
-        $query = "SELECT * FROM {$this->tableName} WEHERE myid = '{$name}' or name='{$name}'";
-
+    /**
+     * @param $contract_id
+     * @return BorrowerModel
+     */
+    public function selectByContractId($contract_id){
+        $query = "SELECT * FROM {$this->tableName} WHERE contract_id like {$contract_id}";
         $this->db->executeQuery($query);
-        return $this->db->getResultAsObject();
+        return $this->db->getAllResultAsObject(new BorrowerModel());
+    }
+
+    /**
+     * @param $name
+     * @return BorrowerModel
+     */
+    public function selectbyId($id){
+        $query = "SELECT * FROM {$this->tableName} WHERE id like {$id}";
+        $this->db->executeQuery($query);
+        return $this->db->getResultAsObject(new BorrowerModel());
+    }
+
+    /**
+     * @param $contract_id int
+     * @return int|null
+     */
+    public function delete($contract_id){
+        $query = "delete from {$this->tableName} where contract_id = {$contract_id}";
+        $this->db->executeQuery($query);
+        return $this->stmt->rowCount();
     }
 
 }
+
+?>

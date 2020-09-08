@@ -15,8 +15,6 @@ $method = $_SERVER["REQUEST_METHOD"];
 $uri = $_SERVER["REQUEST_URI"];
 $uriArray = explode("/", $uri);
 
-$userController = new UserController();
-
 switch ($method . ":" . $uriArray[1]) {
     case "GET:user":
         $userJson = $userController->select($uriArray);

@@ -195,7 +195,7 @@ class ContractModel extends BaseModel
     }
 
     /**
-     * @param string $lender_bank
+     * @param string|null $lender_bank
      */
     public function setLenderBank(?string $lender_bank): void
     {
@@ -211,7 +211,7 @@ class ContractModel extends BaseModel
     }
 
     /**
-     * @param int $lender_account
+     * @param int|null $lender_account
      */
     public function setLenderAccount(?int $lender_account): void
     {

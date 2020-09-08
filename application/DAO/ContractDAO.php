@@ -27,8 +27,7 @@ class ContractDAO extends BaseDAO
                     lender_account,
                     penalty,
                     alarm,
-                    created_at,
-                    updated_at
+                    created_at
                     ) VALUES (
                     '{$contractModel->getTitle()}',
                     '{$contractModel->getBorrowDate()}',
@@ -40,8 +39,7 @@ class ContractDAO extends BaseDAO
                     {$contractModel->getLenderAccount()},
                     '{$penalty}',
                     {$contractModel->getAlarm()},
-                    {$contractModel->getCreatedAt()},
-                    {$contractModel->getUpdatedAt()})";
+                    {$contractModel->getCreatedAt()})";
 
         $this->db->executeQuery($query);
         return $this->db->getInsertId();
@@ -77,19 +75,21 @@ class ContractDAO extends BaseDAO
     }
 
     /**
+     * @param $id int
      * @param ContractModel $contractModel
-     * @return false|int|null
+     * @return int|null
      */
-    public function updateUserInfo($id,$title,$borrorw,$payback,$price,$lender_id,$lender_name,$penalty,$alarm,$updated_at){
+    public function updateContractInfo($id, ContractModel $contractModel){
 
-        $penalty =  str_replace ("'", "\'",$penalty);
+        $penalty =  str_replace ("'", "\'",$contractModel -> getPenalty());
 
-        $query = "UPDATE {$this->tableName} SET title='{$title}', borrow_date='{$borrorw}',payback_date='{$payback}',
-                    price={$price}, lender_id = {$lender_id} , lender_name='{$lender_name}',penalty='{$penalty}',
-                    alarm={$alarm}, updated_at={$updated_at} where id={$id}";
+        $query = "UPDATE {$this->tableName} SET title='{$contractModel->getTitle()}', borrow_date='{$contractModel->getBorrowDate()}',
+                    payback_date='{$contractModel->getPaybackDate()}',price={$contractModel->getPrice()}, lender_id = {$contractModel->getLenderId()} 
+                    ,lender_name='{$contractModel->getLenderName()}',penalty='{$penalty}',alarm={$contractModel->getAlarm()}, 
+                    updated_at={$contractModel->getUpdatedAt()} where id={$id}";
 
         $this->db->executeQuery($query);
-        return $this->db->getLastChangedRowNum();
+        return $this->stmt->rowCount();
     }
 
     /**
@@ -101,16 +101,17 @@ class ContractDAO extends BaseDAO
         $query = "UPDATE {$this->tableName} SET state={$state} where id={$id}";
 
         $this->db->executeQuery($query);
-        return $this->db->getLastChangedRowNum();
+        return $this->stmt->rowCount();
     }
 
     /**
-     * @return ContractModel[]
+     * @param $id int
+     * @return int|null
      */
     public function delete($id){
         $query = "delete from {$this->tableName} where id = {$id};";
         $this->db->executeQuery($query);
-        return $this->db->getLastChangedRowNum();
+        return $this->stmt->rowCount();
     }
 
 }
