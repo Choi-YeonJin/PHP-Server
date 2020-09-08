@@ -9,7 +9,7 @@
 namespace DAO;
 use Model\UserModel;
 
-include_once("../../application/lib/autoload.php");
+include_once("../application/lib/autoload.php");
 
 class UserDAO extends BaseDAO
 {
@@ -26,33 +26,31 @@ class UserDAO extends BaseDAO
                     name,
                     image_url,
                     phone_num,
-                    created_at,
-                    updated_at 
+                    created_at
                     ) VALUES (
                     '{$userModel->getMyid()}',
                     '{$userModel->getPassword()}',
                     '{$userModel->getName()}',
                     '{$userModel->getImageUrl()}',
                     '{$userModel->getPhoneNum()}',
-                    {$userModel->getCreatedAt()},
-                    {$userModel->getUpdatedAt()})";
+                    {$userModel->getCreatedAt()})";
 
         $this->db->executeQuery($query);
         return $this->db->getInsertId();
     }
 
     /**
-     * @param $id string
+     * @param $id int
      * @return UserModel
      */
-    public function selectmyidByID($id){ //회원가입 중복검사
+    public function selectByMyid ($id){ //회원가입 중복검사
         $query = "SELECT * FROM {$this->tableName} WHERE myid like '{$id}'";
         $this->db->executeQuery($query);
-        return $this->stmt->rowCount();
+        return $this->db->getResultAsObject(new UserModel());
     }
 
     /**
-     * @param $id string
+     * @param $id int
      * @return UserModel
      */
     public function selectbyId($id){ // select
@@ -62,10 +60,11 @@ class UserDAO extends BaseDAO
     }
 
     /**
-     * @param $id
+     * @param $myid string
+     * @param $password string
      * @return UserModel
      */
-    public function select($myid,$password){ //login
+    public function selectByMyIDAndPassword($myid,$password){ //login
         $query = "SELECT * FROM {$this->tableName} WHERE myid = '{$myid}' and password = '{$password}'";
         $this->db->executeQuery($query);
         return $this->db->getResultAsObject(new UserModel());
@@ -81,16 +80,30 @@ class UserDAO extends BaseDAO
     }
 
     /**
-     * @return UserModel[]
+     * @param $id int
+     * @param UserModel $userModel
+     * @return int|null
      */
-    public function updateUserInfo($id,$name,$password){
-        $query = "UPDATE {$this->tableName} SET name='{$name}', password='{$password}' where id={$id}";
+    public function update($id,UserModel $userModel){
+        $query = "UPDATE {$this->tableName} SET name='{$userModel->getName()}', password='{$userModel->getPassword()}' where id={$id}";
         $this->db->executeQuery($query);
         return $this->stmt->rowCount();
     }
 
     /**
-     * @return UserModel[]
+     * @param $id int
+     * @param UserModel $userModel
+     * @return false|int|null
+     */
+    public function updateBankAndAccount($id, UserModel $userModel){
+        $query = "UPDATE {$this->tableName} SET bank='{$userModel->getBank()}', account='{$userModel->getAccount()}' where id={$id}";
+        $this->db->executeQuery($query);
+        return $this->stmt->rowCount();
+    }
+
+    /**
+     * @param $id int
+     * @return int|null
      */
     public function delete($id){
         $query = "delete from {$this->tableName} where id = {$id};";

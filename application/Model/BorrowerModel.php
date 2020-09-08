@@ -1,64 +1,95 @@
 <?php
 namespace Model;
-include_once("application/lib/autoload.php");
+include_once("../application/lib/autoload.php");
 
 class BorrowerModel extends BaseModel
 {
     /**
      * @var int
      */
-    private $contractId;
+    private $id;
 
     /**
      * @var int
      */
-    private $userId;
+    private $contract_id;
+
+    /**
+     * @var int
+     */
+    private $borrower_id;
 
     /**
      * @var string
      */
-    private $userName;
+    private $user_name;
 
     /**
      * @var int
      */
-    private $paybackState;
+    private $price;
 
     /**
      * @var int
      */
-    private $createdAt;
+    private $payback_state;
+
+    /**
+     * @var int
+     */
+    private $created_at;
+
+    /**
+     * @var int
+     */
+    private $updated_at;
+
+    /**
+     * @return int
+     */
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int|null $id
+     */
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
+    }
 
     /**
      * @return int
      */
     public function getContractId(): ?int
     {
-        return $this->contractId;
+        return $this->contract_id;
     }
 
     /**
-     * @param int $contractId
+     * @param int|null $contract_id
      */
-    public function setContractId(?int $contractId): void
+    public function setContractId(?int $contract_id): void
     {
-        $this->contractId = $contractId;
+        $this->contract_id = $contract_id;
     }
 
     /**
      * @return int
      */
-    public function getUserId(): ?int
+    public function getBorrowerId(): ?int
     {
-        return $this->userId;
+        return $this->borrower_id;
     }
 
     /**
-     * @param int $userId
+     * @param int|null $borrower_id
      */
-    public function setUserId(?int $userId): void
+    public function setBorrowerId(?int $borrower_id): void
     {
-        $this->userId = $userId;
+        $this->borrower_id = $borrower_id;
     }
 
     /**
@@ -66,15 +97,31 @@ class BorrowerModel extends BaseModel
      */
     public function getUserName(): ?string
     {
-        return $this->userName;
+        return $this->user_name;
     }
 
     /**
-     * @param string $userName
+     * @param string|null $user_name
      */
-    public function setUserName(?string $userName): void
+    public function setUserName(?string $user_name): void
     {
-        $this->userName = $userName;
+        $this->user_name = $user_name;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPrice(): ?int
+    {
+        return $this->price;
+    }
+
+    /**
+     * @param int|null $price
+     */
+    public function setPrice(?int $price): void
+    {
+        $this->price = $price;
     }
 
     /**
@@ -82,15 +129,15 @@ class BorrowerModel extends BaseModel
      */
     public function getPaybackState(): ?int
     {
-        return $this->paybackState;
+        return $this->payback_state;
     }
 
     /**
-     * @param int $paybackState
+     * @param int|null $payback_state
      */
-    public function setPaybackState(?int $paybackState): void
+    public function setPaybackState(?int $payback_state): void
     {
-        $this->paybackState = $paybackState;
+        $this->payback_state = $payback_state;
     }
 
     /**
@@ -98,18 +145,30 @@ class BorrowerModel extends BaseModel
      */
     public function getCreatedAt(): ?int
     {
-        return $this->createdAt;
+        return $this->created_at;
     }
 
     /**
-     * @param int $createdAt
+     * @param int|null $created_at
      */
-    public function setCreatedAt(?int $createdAt): void
+    public function setCreatedAt(?int $created_at): void
     {
-        $this->createdAt = $createdAt;
+        $this->created_at = $created_at;
     }
 
+    /**
+     * @return int
+     */
+    public function getUpdatedAt(): ?int
+    {
+        return $this->updated_at;
+    }
 
-
-
+    /**
+     * @param int|null $updated_at
+     */
+    public function setUpdatedAt(?int $updated_at): void
+    {
+        $this->updated_at = $updated_at;
+    }
 }

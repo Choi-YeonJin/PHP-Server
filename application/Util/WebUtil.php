@@ -16,9 +16,10 @@ class WebUtil
 
     public static function convertArrayKeyToCamelcase($array) {
         $newArray = array();
-        foreach($array as $tmpKey => $tmpValue)
-        {
-            $newArray[WebUtil::convertStringToCamelcase($tmpKey)]=$tmpValue;
+        if(!empty($array)) {
+            foreach ($array as $tmpKey => $tmpValue) {
+                $newArray[WebUtil::convertStringToCamelcase($tmpKey)] = $tmpValue;
+            }
         }
         return $newArray;
     }
