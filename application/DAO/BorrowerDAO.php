@@ -29,9 +29,8 @@ class BorrowerDAO extends BaseDAO
                     {$borrowerModel->getPaybackState()},
                     {$borrowerModel->getCreatedAt()})";
 
-//        $this->db->executeQuery($query);
-//        return $this->db->getInsertId();
-        echo $query;
+        $this->db->executeQuery($query);
+        return $this->db->getInsertId();
     }
 
     /**
@@ -66,6 +65,17 @@ class BorrowerDAO extends BaseDAO
         $query = "SELECT * FROM {$this->tableName} WHERE contract_id like {$contract_id}";
         $this->db->executeQuery($query);
         return $this->db->getAllResultAsObject(new BorrowerModel());
+    }
+
+    /**
+     * @param $user_id
+     * @return BorrowerModel
+     */
+    public function selectByUserId($user_id){
+        $query = "select * from {$this->tableName} where borrower_id={$user_id}";
+        $this->db->executeQuery($query);
+        return $this->db->getAllResultAsObject(new BorrowerModel());
+//        return $query;
     }
 
     /**

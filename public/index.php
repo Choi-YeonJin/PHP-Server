@@ -53,7 +53,7 @@ switch ($method . ":" . $uriArray[1]) {
         echo $contractJson;
         break;
     case "GET:contracts":
-        $contractJson = $contractController->selectAll();
+        $contractJson = $contractController->selectAll($uriArray);
         echo $contractJson;
         break;
     case "GET:contract":
