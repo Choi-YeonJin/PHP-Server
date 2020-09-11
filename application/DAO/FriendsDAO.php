@@ -1,11 +1,11 @@
 <?php
 
 namespace DAO;
-use Model\FriendModel;
+use Model\FriendsModel;
 
 include_once("../application/lib/autoload.php");
 
-class FriendDAO extends BaseDAO
+class FriendsDAO extends BaseDAO
 {
 
 }

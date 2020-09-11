@@ -2,10 +2,10 @@
 
 namespace Controllers;
 
-use Model\FriendModel;
-use Model\WaitFriendModel;
-use DAO\FriendDAO;
-use DAO\WaitFriendDAO;
+use Model\FriendsModel;
+use Model\WaitFriendsModel;
+use DAO\FriendsDAO;
+use DAO\WaitFriendsDAO;
 
 include_once("../application/lib/autoload.php");
 
