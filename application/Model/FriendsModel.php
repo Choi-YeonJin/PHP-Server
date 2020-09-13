@@ -18,6 +18,11 @@ class FriendsModel extends BaseModel
     /**
      * @var int
      */
+    private $friends_id;
+
+    /**
+     * @var int
+     */
     private $favorite;
 
     /**
@@ -65,6 +70,22 @@ class FriendsModel extends BaseModel
     public function setUserId(?int $user_id): void
     {
         $this->user_id = $user_id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFriendsId(): ?int
+    {
+        return $this->friends_id;
+    }
+
+    /**
+     * @param int|null $friends_id
+     */
+    public function setFriendsId(?int $friends_id): void
+    {
+        $this->friends_id = $friends_id;
     }
 
     /**
