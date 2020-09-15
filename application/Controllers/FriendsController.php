@@ -6,7 +6,6 @@ use Model\FriendsModel;
 use Model\WaitFriendsModel;
 use DAO\FriendsDAO;
 use DAO\WaitFriendsDAO;
-use Model\UserModel;
 use DAO\UserDAO;
 
 include_once("../application/lib/autoload.php");
@@ -16,6 +15,81 @@ ini_set("display_errors", 1);
 
 class FriendsController
 {
+    public function selectFriends($uriArray) //GET friends : 친구 목록 가져오기
+    {
+        $friendsDAO = new FriendsDAO();
+
+        if (!empty($uriArray[2])) {
+            $friensList = $friendsDAO->selectbyUserId($uriArray[2]);
+
+            $friendsJson = array(); // 전체 유저 조회할 배열 선언
+            foreach ($friensList as $friendsModel) {
+                $data = $friendsModel->getArray();
+                array_push($friendsJson, $data); // 위에 선언한 배열에 값 추가
+            }
+
+            return json_encode($friendsJson, JSON_UNESCAPED_UNICODE); //JSON_UNESCAPED_UNICODE : 한국어 패치
+        } else {
+            $data = [
+                "result" => false,
+                "errorMessage" => "parameter is null"
+            ];
+
+            return json_encode($data);
+        }
+
+    }
+
+    public function selectFavoriteFriends($uriArray) //GET favorite-friends : 즐겨찾기 친구 목록 가져오기
+    {
+        $friendsDAO = new FriendsDAO();
+
+        if (!empty($uriArray[2])) {
+            $friensList = $friendsDAO->selectFavoritebyUserId($uriArray[2]);
+
+            $friendsJson = array(); // 전체 유저 조회할 배열 선언
+            foreach ($friensList as $friendsModel) {
+                $data = $friendsModel->getArray();
+                array_push($friendsJson, $data); // 위에 선언한 배열에 값 추가
+            }
+
+            return json_encode($friendsJson, JSON_UNESCAPED_UNICODE); //JSON_UNESCAPED_UNICODE : 한국어 패치
+        } else {
+            $data = [
+                "result" => false,
+                "errorMessage" => "parameter is null"
+            ];
+
+            return json_encode($data);
+        }
+
+    }
+
+    public function selectBlockFriends($uriArray) //GET blcok-friends : 차단 친구 목록 가져오기
+    {
+        $friendsDAO = new FriendsDAO();
+
+        if (!empty($uriArray[2])) {
+            $friensList = $friendsDAO->selectBlockbyUserId($uriArray[2]);
+
+            $friendsJson = array(); // 전체 유저 조회할 배열 선언
+            foreach ($friensList as $friendsModel) {
+                $data = $friendsModel->getArray();
+                array_push($friendsJson, $data); // 위에 선언한 배열에 값 추가
+            }
+
+            return json_encode($friendsJson, JSON_UNESCAPED_UNICODE); //JSON_UNESCAPED_UNICODE : 한국어 패치
+        } else {
+            $data = [
+                "result" => false,
+                "errorMessage" => "parameter is null"
+            ];
+
+            return json_encode($data);
+        }
+
+    }
+
     public function createWaitFriends() //POST friends : 친구신청
     {
         $waitFriendsModel = new WaitFriendsModel();
@@ -162,7 +236,7 @@ class FriendsController
         }
     }
 
-    public function updateFriendsCancel($uriArray) //PUT friends/favorite or block : 즐겨찾기 or 차단친구 해제
+    public function updateFriendsCancel($uriArray) //PUT cancel-friends/favorite or block : 즐겨찾기 or 차단친구 해제
     {
         $friendsModel = new FriendsModel();
         $friendsDAO = new FriendsDAO();
@@ -217,81 +291,6 @@ class FriendsController
 
             return json_encode($data);
         }
-    }
-
-    public function selectFriends($uriArray) //GET friends : 친구 목록 가져오기
-    {
-        $friendsDAO = new FriendsDAO();
-
-        if (!empty($uriArray[2])) {
-            $friensList = $friendsDAO->selectbyUserId($uriArray[2]);
-
-            $friendsJson = array(); // 전체 유저 조회할 배열 선언
-            foreach ($friensList as $friendsModel) {
-                $data = $friendsModel->getArray();
-                array_push($friendsJson, $data); // 위에 선언한 배열에 값 추가
-            }
-
-            return json_encode($friendsJson, JSON_UNESCAPED_UNICODE); //JSON_UNESCAPED_UNICODE : 한국어 패치
-        } else {
-            $data = [
-                "result" => false,
-                "errorMessage" => "parameter is null"
-            ];
-
-            return json_encode($data);
-        }
-
-    }
-
-    public function selectFavoriteFriends($uriArray) //GET favorite-friends : 즐겨찾기 친구 목록 가져오기
-    {
-        $friendsDAO = new FriendsDAO();
-
-        if (!empty($uriArray[2])) {
-            $friensList = $friendsDAO->selectFavoritebyUserId($uriArray[2]);
-
-            $friendsJson = array(); // 전체 유저 조회할 배열 선언
-            foreach ($friensList as $friendsModel) {
-                $data = $friendsModel->getArray();
-                array_push($friendsJson, $data); // 위에 선언한 배열에 값 추가
-            }
-
-            return json_encode($friendsJson, JSON_UNESCAPED_UNICODE); //JSON_UNESCAPED_UNICODE : 한국어 패치
-        } else {
-            $data = [
-                "result" => false,
-                "errorMessage" => "parameter is null"
-            ];
-
-            return json_encode($data);
-        }
-
-    }
-
-    public function selectBlockFriends($uriArray) //GET blcok-friends : 차단 친구 목록 가져오기
-    {
-        $friendsDAO = new FriendsDAO();
-
-        if (!empty($uriArray[2])) {
-            $friensList = $friendsDAO->selectBlockbyUserId($uriArray[2]);
-
-            $friendsJson = array(); // 전체 유저 조회할 배열 선언
-            foreach ($friensList as $friendsModel) {
-                $data = $friendsModel->getArray();
-                array_push($friendsJson, $data); // 위에 선언한 배열에 값 추가
-            }
-
-            return json_encode($friendsJson, JSON_UNESCAPED_UNICODE); //JSON_UNESCAPED_UNICODE : 한국어 패치
-        } else {
-            $data = [
-                "result" => false,
-                "errorMessage" => "parameter is null"
-            ];
-
-            return json_encode($data);
-        }
-
     }
 
     public function deleteFriends() //DELETE friends : 친구 삭제

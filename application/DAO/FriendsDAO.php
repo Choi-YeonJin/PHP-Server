@@ -29,16 +29,6 @@ class FriendsDAO extends BaseDAO
     }
 
     /**
-     * @param $id int
-     * @return FriendsModel
-     */
-    public function selectbyId($id){ // select
-        $query = "SELECT * FROM {$this->tableName} WHERE id like '{$id}'";
-        $this->db->executeQuery($query);
-        return $this->db->getResultAsObject(new FriendsModel());
-    }
-
-    /**
      * @return FriendsModel[]
      */
     public function selectbyUserId($userId){

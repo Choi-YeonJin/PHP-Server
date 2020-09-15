@@ -75,17 +75,6 @@ class BorrowerDAO extends BaseDAO
         $query = "select * from {$this->tableName} where borrower_id={$userId}";
         $this->db->executeQuery($query);
         return $this->db->getAllResultAsObject(new BorrowerModel());
-//        return $query;
-    }
-
-    /**
-     * @param $name
-     * @return BorrowerModel
-     */
-    public function selectbyId($id){
-        $query = "SELECT * FROM {$this->tableName} WHERE id like {$id}";
-        $this->db->executeQuery($query);
-        return $this->db->getResultAsObject(new BorrowerModel());
     }
 
     /**
