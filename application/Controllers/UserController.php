@@ -55,6 +55,50 @@ class UserController
         return json_encode($userJson, JSON_UNESCAPED_UNICODE); //JSON_UNESCAPED_UNICODE : 한국어 패치
     }
 
+    public function selectUserId($data) //GET user-id : 아이디찾기
+    {
+        $userModel = new UserModel();
+        $userDAO = new UserDAO();
+        $userModel->setByArray(json_decode($data)); // 요청받은 파라미터를 객체에 맞게끔 변형, data set
+
+        $user = $userDAO->selectByNameAndPhoneNum($userModel);
+
+        if(!empty($user)){
+            $data = ["result" => true,
+                "userMyid" => "{$user->getMyid()}"];
+
+            return json_encode($data);
+        }else{
+            $data = ["result" => false,
+                "userMyid" => "name or phoneNum is Not Found"];
+
+            return json_encode($data);
+        }
+
+    }
+
+    public function selectUserPassword($data) //GET user-password : 비밀번호 찾기
+    {
+        $userModel = new UserModel();
+        $userDAO = new UserDAO();
+        $userModel->setByArray(json_decode($data)); // 요청받은 파라미터를 객체에 맞게끔 변형, data set
+
+        $user = $userDAO->selectByMyidAndName($userModel);
+
+        if(!empty($user)){
+            $data = ["result" => true,
+                "userPassword" => "{$user->getPassword()}"];
+
+            return json_encode($data);
+        }else{
+            $data = ["result" => false,
+                "userPassword" => "id or name is Not Found"];
+
+            return json_encode($data);
+        }
+
+    }
+
     public function create($data) //POST user : 회원가입
     {
         $userModel = new UserModel();

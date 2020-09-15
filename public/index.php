@@ -27,6 +27,14 @@ switch ($method . ":" . $uriArray[1]) {
         $userJson = $userController->selectAll();
         echo $userJson;
         break;
+    case "GET:user-id": //이름과 전화번호로 아이디 찾기
+        $userJson = $userController->selectUserId(file_get_contents('php://input'));
+        echo $userJson;
+        break;
+    case "GET:user-password": //이름과 아이디로 비밀번호 찾기
+        $userJson = $userController->selectUserPassword(file_get_contents('php://input'));
+        echo $userJson;
+        break;
     case "POST:user": //회원가입
         $userJson = $userController->create(file_get_contents('php://input'));
         echo $userJson;

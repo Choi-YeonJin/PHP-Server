@@ -50,6 +50,26 @@ class UserDAO extends BaseDAO
     }
 
     /**
+     * @param UserModel $userModel
+     * @return UserModel
+     */
+    public function selectByNameAndPhoneNum (UserModel $userModel){ //회원가입 중복검사
+        $query = "SELECT * FROM {$this->tableName} WHERE name = '{$userModel->getName()}' AND phone_num = '{$userModel->getPhoneNum()}'";
+        $this->db->executeQuery($query);
+        return $this->db->getResultAsObject(new UserModel());
+    }
+
+    /**
+     * @param UserModel $userModel
+     * @return UserModel
+     */
+    public function selectByMyidAndName (UserModel $userModel){ //회원가입
+        $query = "SELECT * FROM {$this->tableName} WHERE myid = '{$userModel->getMyid()}' AND name = '{$userModel->getName()}'";
+        $this->db->executeQuery($query);
+        return $this->db->getResultAsObject(new UserModel());
+    }
+
+    /**
      * @param $id int
      * @return UserModel
      */
