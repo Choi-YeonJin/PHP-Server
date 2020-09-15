@@ -58,21 +58,21 @@ class BorrowerDAO extends BaseDAO
     }
 
     /**
-     * @param $contract_id
+     * @param $contractId
      * @return BorrowerModel
      */
-    public function selectByContractId($contract_id){
-        $query = "SELECT * FROM {$this->tableName} WHERE contract_id like {$contract_id}";
+    public function selectByContractId($contractId){
+        $query = "SELECT * FROM {$this->tableName} WHERE contract_id like {$contractId}";
         $this->db->executeQuery($query);
         return $this->db->getAllResultAsObject(new BorrowerModel());
     }
 
     /**
-     * @param $user_id
+     * @param $userId
      * @return BorrowerModel
      */
-    public function selectByUserId($user_id){
-        $query = "select * from {$this->tableName} where borrower_id={$user_id}";
+    public function selectByUserId($userId){
+        $query = "select * from {$this->tableName} where borrower_id={$userId}";
         $this->db->executeQuery($query);
         return $this->db->getAllResultAsObject(new BorrowerModel());
 //        return $query;
@@ -89,11 +89,11 @@ class BorrowerDAO extends BaseDAO
     }
 
     /**
-     * @param $contract_id int
+     * @param $contractId int
      * @return int|null
      */
-    public function delete($contract_id){
-        $query = "delete from {$this->tableName} where contract_id = {$contract_id}";
+    public function delete($contractId){
+        $query = "delete from {$this->tableName} where contract_id = {$contractId}";
         $this->db->executeQuery($query);
         return $this->stmt->rowCount();
     }

@@ -56,7 +56,7 @@ class ContractDAO extends BaseDAO
     }
 
     /**
-     * @param $name
+     * @param $id
      * @return ContractModel
      */
     public function selectbyId($id){
@@ -75,11 +75,11 @@ class ContractDAO extends BaseDAO
     }
 
     /**
-     * @param $user_id
+     * @param $userId
      * @return ContractModel
      */
-    public function selectByUserId($user_id){
-        $query = "select * from {$this->tableName} where lender_id={$user_id}";
+    public function selectByUserId($userId){
+        $query = "select * from {$this->tableName} where lender_id={$userId}";
         $this->db->executeQuery($query);
         return $this->db->getAllResultAsObject(new ContractModel());
 //        return $query;

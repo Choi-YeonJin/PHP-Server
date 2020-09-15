@@ -14,19 +14,19 @@ class WaitFriendsDAO extends BaseDAO
      */
     public function insert(WaitFriendsModel $waitFriendsModel){
         $query = "INSERT INTO {$this->tableName} (
-                    add_time,
+                    request_time,
                     applicant_id,
                     applicant_name,
                     recipient_id,
                     recipient_name,
-                    add_state
+                    accept_state
                     ) VALUES (
-                    {$waitFriendsModel->getAddTime()},
+                    {$waitFriendsModel->getRequestTime()},
                     {$waitFriendsModel->getApplicantId()},
                     '{$waitFriendsModel->getApplicantName()}',
                     {$waitFriendsModel->getRecipientId()},
                     '{$waitFriendsModel->getRecipientName()}',
-                    {$waitFriendsModel->getAddState()})";
+                    {$waitFriendsModel->getAcceptState()})";
 
         $this->db->executeQuery($query);
         return $this->db->getInsertId();
@@ -47,7 +47,7 @@ class WaitFriendsDAO extends BaseDAO
      * @return false|int|null
      */
     public function updateAcceptTime(WaitFriendsModel $waitFriendsModel){
-        $query = "UPDATE {$this->tableName} SET add_state={$waitFriendsModel->getAddState()}, accept_time={$waitFriendsModel->getAcceptTime()} 
+        $query = "UPDATE {$this->tableName} SET accept_state={$waitFriendsModel->getAcceptState()}, accept_time={$waitFriendsModel->getAcceptTime()} 
                     where id={$waitFriendsModel->getId()}";
 
         $this->db->executeQuery($query);
