@@ -113,11 +113,11 @@ class ContractController
         }
     }
 
-    public function selectAllBorrower($contract_id) //select : contract_id를 가진 borrower 전체 조회
+    public function selectAllBorrower($contractId) //select : contract_id를 가진 borrower 전체 조회
     {
         $borrowerDAO = new BorrowerDAO();
 
-        $borrowerList = $borrowerDAO->selectByContractId($contract_id); // contract_id를 가진 borrower selcet
+        $borrowerList = $borrowerDAO->selectByContractId($contractId); // contract_id를 가진 borrower selcet
 
         $borrorwerJson = array(); // contract_id를 가진 borrower 조회할 배열 선언
         foreach ($borrowerList as $borrowerModel) {
