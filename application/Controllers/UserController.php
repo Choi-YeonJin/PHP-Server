@@ -12,6 +12,49 @@ ini_set("display_errors", 1);
 
 class UserController
 {
+    public function select($uriArray) //GET user : 개인 회원 조회
+    {
+        $userDAO = new UserDAO();
+
+        if(!empty($uriArray[2])){ // 파라미터 값 유호성 검사
+            $result = $userDAO->selectbyId($uriArray[2]);
+            if(!empty($result)){ // 조회 성공
+                $data = ["id" => "{$result->getId()}",
+                    "myid" => "{$result->getMyid()}",
+                    "password" => "{$result->getPassword()}",
+                    "name" => "{$result->getName()}",
+                    "imageUrl" => "{$result->getImageUrl()}",
+                    "phoneNum" => "{$result->getPhoneNum()}"];
+                return json_encode($data, JSON_UNESCAPED_UNICODE);
+            }else{ // 조회 실패
+                $data = ["result" => false];
+
+                return json_encode($data);
+            }
+        }else{ // 파라미터 값 is null
+            $data = ["result" => false,
+                "errorMessage" => "parameter is null"]; //조회할 유저 id값이 안넘어왔을 때
+
+            return json_encode($data);
+        }
+
+    }
+
+    public function selectAll() //GET userAll : 전체 회원 조회
+    {
+        $userDAO = new UserDAO();
+
+        $userList = $userDAO->selectAll(); // 전체 리스트 select
+
+        $userJson = array(); // 전체 유저 조회할 배열 선언
+        foreach ($userList as $userModel) {
+            $data = $userModel->getArray();
+            array_push($userJson, $data); // 위에 선언한 배열에 값 추가
+        }
+
+        return json_encode($userJson, JSON_UNESCAPED_UNICODE); //JSON_UNESCAPED_UNICODE : 한국어 패치
+    }
+
     public function create($data) //POST user : 회원가입
     {
         $userModel = new UserModel();
@@ -75,49 +118,6 @@ class UserController
         }
     }
 
-    public function selectAll() //GET userAll : 전체 회원 조회
-    {
-        $userDAO = new UserDAO();
-
-        $userList = $userDAO->selectAll(); // 전체 리스트 select
-
-        $userJson = array(); // 전체 유저 조회할 배열 선언
-        foreach ($userList as $userModel) {
-            $data = $userModel->getArray();
-            array_push($userJson, $data); // 위에 선언한 배열에 값 추가
-        }
-
-        return json_encode($userJson, JSON_UNESCAPED_UNICODE); //JSON_UNESCAPED_UNICODE : 한국어 패치 
-    }
-
-    public function select($uriArray) //GET user : 개인 회원 조회
-    {
-        $userDAO = new UserDAO();
-
-        if(!empty($uriArray[2])){ // 파라미터 값 유호성 검사
-            $result = $userDAO->selectbyId($uriArray[2]);
-            if(!empty($result)){ // 조회 성공
-                $data = ["id" => "{$result->getId()}",
-                    "myid" => "{$result->getMyid()}",
-                    "password" => "{$result->getPassword()}",
-                    "name" => "{$result->getName()}",
-                    "imageUrl" => "{$result->getImageUrl()}",
-                    "phoneNum" => "{$result->getPhoneNum()}"];
-                return json_encode($data, JSON_UNESCAPED_UNICODE);
-            }else{ // 조회 실패
-                $data = ["result" => false];
-
-                return json_encode($data);
-            }
-        }else{ // 파라미터 값 is null
-            $data = ["result" => false,
-                "errorMessage" => "parameter is null"]; //조회할 유저 id값이 안넘어왔을 때
-
-            return json_encode($data);
-        }
-
-    }
-
     public function update($uriArray) //PUT user : 유저 정보 수정
     {
         $userModel = new UserModel();
@@ -146,7 +146,7 @@ class UserController
 
     }
 
-    public function createBankAndAccount($uriArray) //POST bank-registration : 유저 계좌 정보 등록
+    public function createBankAndAccount($uriArray) //PUT bank-registration : 유저 계좌 정보 등록
     {
         $userModel = new UserModel();
         $userModel->setByArray(json_decode(file_get_contents('php://input'))); // body에 담긴 data 객체에 맞게끔 변형, data set

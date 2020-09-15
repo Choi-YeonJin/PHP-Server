@@ -53,7 +53,7 @@ class UserDAO extends BaseDAO
      * @param $id int
      * @return UserModel
      */
-    public function selectbyId($id){ // select
+    public function selectbyId($id){ // 개인 회원 조회
         $query = "SELECT * FROM {$this->tableName} WHERE id like '{$id}'";
         $this->db->executeQuery($query);
         return $this->db->getResultAsObject(new UserModel());

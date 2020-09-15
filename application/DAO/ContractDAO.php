@@ -46,17 +46,7 @@ class ContractDAO extends BaseDAO
     }
 
     /**
-     * @param $name
-     * @return ContractModel
-     */
-    public function selectlender($name){
-        $query = "SELECT * FROM {$this->tableName} WHERE lender_name like '{$name}'";
-        $this->db->executeQuery($query);
-        return $this->db->getResultAsObject(new ContractModel());
-    }
-
-    /**
-     * @param $name
+     * @param $id
      * @return ContractModel
      */
     public function selectbyId($id){
@@ -66,16 +56,7 @@ class ContractDAO extends BaseDAO
     }
 
     /**
-     * @return UserModel[]
-     */
-    public function selectAll(){
-        $query = "SELECT * FROM {$this->tableName}";
-        $this->db->executeQuery($query);
-        return $this->db->getAllResultAsObject(new ContractModel());
-    }
-
-    /**
-     * @param $user_id
+     * @param $userId
      * @return ContractModel
      */
     public function selectByUserId($user_id){
