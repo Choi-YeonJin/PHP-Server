@@ -34,12 +34,12 @@ class  UserModel extends BaseModel {
     /**
      * @var string
      */
-    private $image_url;
+    private $imageUrl;
 
     /**
      * @var string
      */
-    private $phone_num;
+    private $phoneNum;
 
     /**
      * @var string
@@ -54,12 +54,12 @@ class  UserModel extends BaseModel {
     /**
      * @var int
      */
-    private $created_at;
+    private $createdAt;
 
     /**
      * @var int
      */
-    private $updated_at;
+    private $updatedAt;
 
     /**
      * @return int
@@ -130,15 +130,15 @@ class  UserModel extends BaseModel {
      */
     public function getImageUrl(): ?string
     {
-        return $this->image_url;
+        return $this->imageUrl;
     }
 
     /**
-     * @param string|null $image_url
+     * @param string|null $imageUrl
      */
-    public function setImageUrl(?string $image_url): void
+    public function setImageUrl(?string $imageUrl): void
     {
-        $this->image_url = $image_url;
+        $this->imageUrl = $imageUrl;
     }
 
     /**
@@ -146,15 +146,15 @@ class  UserModel extends BaseModel {
      */
     public function getPhoneNum(): ?string
     {
-        return $this->phone_num;
+        return $this->phoneNum;
     }
 
     /**
-     * @param string|null $phone_num
+     * @param string|null $phoneNum
      */
-    public function setPhoneNum(?string $phone_num): void
+    public function setPhoneNum(?string $phoneNum): void
     {
-        $this->phone_num = $phone_num;
+        $this->phoneNum = $phoneNum;
     }
 
     /**
@@ -194,15 +194,15 @@ class  UserModel extends BaseModel {
      */
     public function getCreatedAt(): ?int
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     /**
-     * @param int|null $created_at
+     * @param int|null $createdAt
      */
-    public function setCreatedAt(?int $created_at): void
+    public function setCreatedAt(?int $createdAt): void
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
     }
 
     /**
@@ -210,14 +210,14 @@ class  UserModel extends BaseModel {
      */
     public function getUpdatedAt(): ?int
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
     /**
-     * @param int|null $updated_at
+     * @param int|null $updatedAt
      */
-    public function setUpdatedAt(?int $updated_at): void
+    public function setUpdatedAt(?int $updatedAt): void
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
     }
 }
