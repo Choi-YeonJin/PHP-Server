@@ -17,12 +17,12 @@ class ContractModel extends BaseModel
     /**
      * @var string
      */
-    private $borrow_date;
+    private $borrowDate;
 
     /**
      * @var string
      */
-    private $payback_date;
+    private $paybackDate;
 
     /**
      * @var int
@@ -32,22 +32,22 @@ class ContractModel extends BaseModel
     /**
      * @var int
      */
-    private $lender_id;
+    private $lenderId;
 
     /**
      * @var string
      */
-    private $lender_name;
+    private $lenderName;
 
     /**
      * @var string
      */
-    private $lender_bank;
+    private $lenderBank;
 
     /**
      * @var int
      */
-    private $lender_account;
+    private $lenderAccount;
 
     /**
      * @var string
@@ -67,12 +67,12 @@ class ContractModel extends BaseModel
     /**
      * @var int
      */
-    private $created_at;
+    private $createdAt;
 
     /**
      * @var int
      */
-    private $updated_at;
+    private $updatedAt;
 
     /**
      * @return int
@@ -111,15 +111,15 @@ class ContractModel extends BaseModel
      */
     public function getBorrowDate(): ?string
     {
-        return $this->borrow_date;
+        return $this->borrowDate;
     }
 
     /**
-     * @param string|null $borrow_date
+     * @param string|null $borrowDate
      */
-    public function setBorrowDate(?string $borrow_date): void
+    public function setBorrowDate(?string $borrowDate): void
     {
-        $this->borrow_date = $borrow_date;
+        $this->borrowDate = $borrowDate;
     }
 
     /**
@@ -127,15 +127,15 @@ class ContractModel extends BaseModel
      */
     public function getPaybackDate(): ?string
     {
-        return $this->payback_date;
+        return $this->paybackDate;
     }
 
     /**
-     * @param string|null $payback_date
+     * @param string|null $paybackDate
      */
-    public function setPaybackDate(?string $payback_date): void
+    public function setPaybackDate(?string $paybackDate): void
     {
-        $this->payback_date = $payback_date;
+        $this->paybackDate = $paybackDate;
     }
 
     /**
@@ -159,15 +159,15 @@ class ContractModel extends BaseModel
      */
     public function getLenderId(): ?int
     {
-        return $this->lender_id;
+        return $this->lenderId;
     }
 
     /**
-     * @param int|null $lender_id
+     * @param int|null $lenderId
      */
-    public function setLenderId(?int $lender_id): void
+    public function setLenderId(?int $lenderId): void
     {
-        $this->lender_id = $lender_id;
+        $this->lenderId = $lenderId;
     }
 
     /**
@@ -175,15 +175,15 @@ class ContractModel extends BaseModel
      */
     public function getLenderName(): ?string
     {
-        return $this->lender_name;
+        return $this->lenderName;
     }
 
     /**
-     * @param string|null $lender_name
+     * @param string|null $lenderName
      */
-    public function setLenderName(?string $lender_name): void
+    public function setLenderName(?string $lenderName): void
     {
-        $this->lender_name = $lender_name;
+        $this->lenderName = $lenderName;
     }
 
     /**
@@ -191,15 +191,15 @@ class ContractModel extends BaseModel
      */
     public function getLenderBank(): ?string
     {
-        return $this->lender_bank;
+        return $this->lenderBank;
     }
 
     /**
-     * @param string|null $lender_bank
+     * @param string|null $lenderBank
      */
-    public function setLenderBank(?string $lender_bank): void
+    public function setLenderBank(?string $lenderBank): void
     {
-        $this->lender_bank = $lender_bank;
+        $this->lenderBank = $lenderBank;
     }
 
     /**
@@ -207,15 +207,15 @@ class ContractModel extends BaseModel
      */
     public function getLenderAccount(): ?int
     {
-        return $this->lender_account;
+        return $this->lenderAccount;
     }
 
     /**
-     * @param int|null $lender_account
+     * @param int|null $lenderAccount
      */
-    public function setLenderAccount(?int $lender_account): void
+    public function setLenderAccount(?int $lenderAccount): void
     {
-        $this->lender_account = $lender_account;
+        $this->lenderAccount = $lenderAccount;
     }
 
     /**
@@ -271,15 +271,15 @@ class ContractModel extends BaseModel
      */
     public function getCreatedAt(): ?int
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     /**
-     * @param int|null $created_at
+     * @param int|null $createdAt
      */
-    public function setCreatedAt(?int $created_at): void
+    public function setCreatedAt(?int $createdAt): void
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
     }
 
     /**
@@ -287,15 +287,15 @@ class ContractModel extends BaseModel
      */
     public function getUpdatedAt(): ?int
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
     /**
-     * @param int|null $updated_at
+     * @param int|null $updatedAt
      */
-    public function setUpdatedAt(?int $updated_at): void
+    public function setUpdatedAt(?int $updatedAt): void
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
     }
 
 
