@@ -12,17 +12,17 @@ class BorrowerModel extends BaseModel
     /**
      * @var int
      */
-    private $contract_id;
+    private $contractId;
 
     /**
      * @var int
      */
-    private $borrower_id;
+    private $borrowerId;
 
     /**
      * @var string
      */
-    private $user_name;
+    private $userName;
 
     /**
      * @var int
@@ -32,17 +32,17 @@ class BorrowerModel extends BaseModel
     /**
      * @var int
      */
-    private $payback_state;
+    private $paybackState;
 
     /**
      * @var int
      */
-    private $created_at;
+    private $createdAt;
 
     /**
      * @var int
      */
-    private $updated_at;
+    private $updatedAt;
 
     /**
      * @return int
@@ -65,15 +65,15 @@ class BorrowerModel extends BaseModel
      */
     public function getContractId(): ?int
     {
-        return $this->contract_id;
+        return $this->contractId;
     }
 
     /**
-     * @param int|null $contract_id
+     * @param int|null $contractId
      */
-    public function setContractId(?int $contract_id): void
+    public function setContractId(?int $contractId): void
     {
-        $this->contract_id = $contract_id;
+        $this->contractId = $contractId;
     }
 
     /**
@@ -81,15 +81,15 @@ class BorrowerModel extends BaseModel
      */
     public function getBorrowerId(): ?int
     {
-        return $this->borrower_id;
+        return $this->borrowerId;
     }
 
     /**
-     * @param int|null $borrower_id
+     * @param int|null $borrowerId
      */
-    public function setBorrowerId(?int $borrower_id): void
+    public function setBorrowerId(?int $borrowerId): void
     {
-        $this->borrower_id = $borrower_id;
+        $this->borrowerId = $borrowerId;
     }
 
     /**
@@ -97,15 +97,15 @@ class BorrowerModel extends BaseModel
      */
     public function getUserName(): ?string
     {
-        return $this->user_name;
+        return $this->userName;
     }
 
     /**
-     * @param string|null $user_name
+     * @param string|null $userName
      */
-    public function setUserName(?string $user_name): void
+    public function setUserName(?string $userName): void
     {
-        $this->user_name = $user_name;
+        $this->userName = $userName;
     }
 
     /**
@@ -129,15 +129,15 @@ class BorrowerModel extends BaseModel
      */
     public function getPaybackState(): ?int
     {
-        return $this->payback_state;
+        return $this->paybackState;
     }
 
     /**
-     * @param int|null $payback_state
+     * @param int|null $paybackState
      */
-    public function setPaybackState(?int $payback_state): void
+    public function setPaybackState(?int $paybackState): void
     {
-        $this->payback_state = $payback_state;
+        $this->paybackState = $paybackState;
     }
 
     /**
@@ -145,15 +145,15 @@ class BorrowerModel extends BaseModel
      */
     public function getCreatedAt(): ?int
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     /**
-     * @param int|null $created_at
+     * @param int|null $createdAt
      */
-    public function setCreatedAt(?int $created_at): void
+    public function setCreatedAt(?int $createdAt): void
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
     }
 
     /**
@@ -161,14 +161,14 @@ class BorrowerModel extends BaseModel
      */
     public function getUpdatedAt(): ?int
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
     /**
-     * @param int|null $updated_at
+     * @param int|null $updatedAt
      */
-    public function setUpdatedAt(?int $updated_at): void
+    public function setUpdatedAt(?int $updatedAt): void
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
     }
 }
