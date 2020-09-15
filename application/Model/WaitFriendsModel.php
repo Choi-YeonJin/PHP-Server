@@ -12,37 +12,37 @@ class WaitFriendsModel extends BaseModel
     /**
      * @var int
      */
-    private $add_time;
+    private $requestTime;
 
     /**
      * @var int
      */
-    private $applicant_id;
+    private $applicantId;
 
     /**
      * @var string
      */
-    private $applicant_name;
+    private $applicantName;
 
     /**
      * @var int
      */
-    private $recipient_id;
+    private $recipientId;
 
     /**
      * @var string
      */
-    private $recipient_name;
+    private $recipientName;
 
     /**
      * @var int
      */
-    private $add_state;
+    private $acceptState;
 
     /**
      * @var int
      */
-    private $accept_time;
+    private $acceptTime;
 
     /**
      * @return int
@@ -63,17 +63,17 @@ class WaitFriendsModel extends BaseModel
     /**
      * @return int
      */
-    public function getAddTime(): ?int
+    public function getRequestTime(): ?int
     {
-        return $this->add_time;
+        return $this->requestTime;
     }
 
     /**
-     * @param int|null $add_time
+     * @param int $requestTime
      */
-    public function setAddTime(?int $add_time): void
+    public function setRequestTime(?int $requestTime): void
     {
-        $this->add_time = $add_time;
+        $this->requestTime = $requestTime;
     }
 
     /**
@@ -81,15 +81,15 @@ class WaitFriendsModel extends BaseModel
      */
     public function getApplicantId(): ?int
     {
-        return $this->applicant_id;
+        return $this->applicantId;
     }
 
     /**
-     * @param int|null $applicant_id
+     * @param int|null $applicantId
      */
-    public function setApplicantId(?int $applicant_id): void
+    public function setApplicantId(?int $applicantId): void
     {
-        $this->applicant_id = $applicant_id;
+        $this->applicantId = $applicantId;
     }
 
     /**
@@ -97,15 +97,15 @@ class WaitFriendsModel extends BaseModel
      */
     public function getApplicantName(): ?string
     {
-        return $this->applicant_name;
+        return $this->applicantName;
     }
 
     /**
-     * @param string|null $applicant_name
+     * @param string|null $applicantName
      */
-    public function setApplicantName(?string $applicant_name): void
+    public function setApplicantName(?string $applicantName): void
     {
-        $this->applicant_name = $applicant_name;
+        $this->applicantName = $applicantName;
     }
 
     /**
@@ -113,15 +113,15 @@ class WaitFriendsModel extends BaseModel
      */
     public function getRecipientId(): ?int
     {
-        return $this->recipient_id;
+        return $this->recipientId;
     }
 
     /**
-     * @param int|null $recipient_id
+     * @param int|null $recipientId
      */
-    public function setRecipientId(?int $recipient_id): void
+    public function setRecipientId(?int $recipientId): void
     {
-        $this->recipient_id = $recipient_id;
+        $this->recipientId = $recipientId;
     }
 
     /**
@@ -129,31 +129,31 @@ class WaitFriendsModel extends BaseModel
      */
     public function getRecipientName(): ?string
     {
-        return $this->recipient_name;
+        return $this->recipientName;
     }
 
     /**
-     * @param string|null $recipient_name
+     * @param string|null $recipientName
      */
-    public function setRecipientName(?string $recipient_name): void
+    public function setRecipientName(?string $recipientName): void
     {
-        $this->recipient_name = $recipient_name;
+        $this->recipientName = $recipientName;
     }
 
     /**
      * @return int
      */
-    public function getAddState(): ?int
+    public function getAcceptState(): ?int
     {
-        return $this->add_state;
+        return $this->acceptState;
     }
 
     /**
-     * @param int|null $add_state
+     * @param int $acceptState
      */
-    public function setAddState(?int $add_state): void
+    public function setAcceptState(?int $acceptState): void
     {
-        $this->add_state = $add_state;
+        $this->acceptState = $acceptState;
     }
 
     /**
@@ -161,15 +161,15 @@ class WaitFriendsModel extends BaseModel
      */
     public function getAcceptTime(): ?int
     {
-        return $this->accept_time;
+        return $this->acceptTime;
     }
 
     /**
-     * @param int|null $accept_time
+     * @param int|null $acceptTime
      */
-    public function setAcceptTime(?int $accept_time): void
+    public function setAcceptTime(?int $acceptTime): void
     {
-        $this->accept_time = $accept_time;
+        $this->acceptTime = $acceptTime;
     }
 
 }
