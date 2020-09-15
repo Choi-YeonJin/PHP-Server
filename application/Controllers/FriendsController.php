@@ -22,8 +22,8 @@ class FriendsController
         $waitFriendsDAO = new WaitFriendsDAO();
         $userDAO = new UserDAO();
         $waitFriendsModel->setByArray(json_decode(file_get_contents('php://input'))); // 요청받은 파라미터를 객체에 맞게끔 변형, data set
-        $waitFriendsModel->setAddTime(time()); // 시간은 서버 시간으로 세팅
-        $waitFriendsModel->setAddState(0); //신청 수락 여부 Default=0
+        $waitFriendsModel->setRequestTime(time()); // 시간은 서버 시간으로 세팅
+        $waitFriendsModel->setAcceptState(0); //신청 수락 여부 Default=0
         $waitFriendsModel->setApplicantId($waitFriendsModel->getApplicantId()); //현재 로그인 한 유저의 id
         $user = $userDAO->selectbyId($waitFriendsModel->getApplicantId()); //현재 로그인한 유저 정보 select
         $userName = $user->getName(); // 유저의 name
@@ -58,7 +58,7 @@ class FriendsController
         $freindsDAO = new FriendsDAO();
         $waitFriendsModel->setByArray(json_decode(file_get_contents('php://input'))); // 요청받은 파라미터를 객체에 맞게끔 변형, data set
         $waitFriendsModel->setAcceptTime(time()); // 시간은 서버 시간으로 세팅
-        $waitFriendsModel->setAddState(1); //신청 수락
+        $waitFriendsModel->setAcceptState(1); //신청 수락
         $waitFriendsId = $waitFriendsDAO->updateAcceptTime($waitFriendsModel);
 
         $friendsModel->setCreatedAt(time());

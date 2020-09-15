@@ -13,12 +13,12 @@ class FriendsModel extends BaseModel
     /**
      * @var int
      */
-    private $user_id;
+    private $userId;
 
     /**
      * @var int
      */
-    private $friends_id;
+    private $friendsId;
 
     /**
      * @var int
@@ -33,12 +33,12 @@ class FriendsModel extends BaseModel
     /**
      * @var int
      */
-    private $created_at;
+    private $createdAt;
 
     /**
      * @var int
      */
-    private $updated_at;
+    private $updatedAt;
 
     /**
      * @return int
@@ -61,15 +61,15 @@ class FriendsModel extends BaseModel
      */
     public function getUserId(): ?int
     {
-        return $this->user_id;
+        return $this->userId;
     }
 
     /**
-     * @param int|null $user_id
+     * @param int|null $userId
      */
-    public function setUserId(?int $user_id): void
+    public function setUserId(?int $userId): void
     {
-        $this->user_id = $user_id;
+        $this->userId = $userId;
     }
 
     /**
@@ -77,15 +77,15 @@ class FriendsModel extends BaseModel
      */
     public function getFriendsId(): ?int
     {
-        return $this->friends_id;
+        return $this->friendsId;
     }
 
     /**
-     * @param int|null $friends_id
+     * @param int|null $friendsId
      */
-    public function setFriendsId(?int $friends_id): void
+    public function setFriendsId(?int $friendsId): void
     {
-        $this->friends_id = $friends_id;
+        $this->friendsId = $friendsId;
     }
 
     /**
@@ -125,15 +125,15 @@ class FriendsModel extends BaseModel
      */
     public function getCreatedAt(): ?int
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     /**
-     * @param int|null $created_at
+     * @param int|null $createdAt
      */
-    public function setCreatedAt(?int $created_at): void
+    public function setCreatedAt(?int $createdAt): void
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
     }
 
     /**
@@ -141,15 +141,15 @@ class FriendsModel extends BaseModel
      */
     public function getUpdatedAt(): ?int
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
     /**
-     * @param int|null $updated_at
+     * @param int|null $updatedAt
      */
-    public function setUpdatedAt(?int $updated_at): void
+    public function setUpdatedAt(?int $updatedAt): void
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
     }
 }
 ?>
