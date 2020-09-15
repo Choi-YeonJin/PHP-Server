@@ -78,15 +78,15 @@ switch ($method . ":" . $uriArray[1]) {
         break;
     //FRIENDS
     case "POST:friends": //친구 신청 보내기
-        $friendsJson = $friendsController->createWaitFriends($uriArray); //현재 로그인 한 user id
+        $friendsJson = $friendsController->createWaitFriends(); //현재 로그인 한 user id
         echo $friendsJson;
         break;
     case "POST:rqfriends": //친구 신청 수락
-        $friendsJson=$friendsController->createFriends($uriArray); //해당 신청 사항의 id
+        $friendsJson=$friendsController->createFriends();
         echo $friendsJson;
         break;
     case "POST:refuse-rqfriends": //친구 신청 거절
-        $friendsJson=$friendsController->deleteWaitFriends($uriArray); //해당 신청 사항의 id
+        $friendsJson=$friendsController->deleteWaitFriends(); //해당 신청 사항의 id
         echo $friendsJson;
         break;
     case "PUT:friends": // 즐겨찾기/차단친구 추가

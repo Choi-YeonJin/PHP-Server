@@ -43,13 +43,12 @@ class WaitFriendsDAO extends BaseDAO
     }
 
     /**
-     * @param $waitFriendsId int
      * @param WaitFriendsModel $waitFriendsModel
      * @return false|int|null
      */
-    public function updateAcceptTime($waitFriendsId, WaitFriendsModel $waitFriendsModel){
+    public function updateAcceptTime(WaitFriendsModel $waitFriendsModel){
         $query = "UPDATE {$this->tableName} SET add_state={$waitFriendsModel->getAddState()}, accept_time={$waitFriendsModel->getAcceptTime()} 
-                    where id={$waitFriendsId}";
+                    where id={$waitFriendsModel->getId()}";
 
         $this->db->executeQuery($query);
         return $this->stmt->rowCount();

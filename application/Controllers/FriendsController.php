@@ -16,98 +16,93 @@ ini_set("display_errors", 1);
 
 class FriendsController
 {
-    public function createWaitFriends($uriArray) //POST friends : 친구신청
+    public function createWaitFriends() //POST friends : 친구신청
     {
         $waitFriendsModel = new WaitFriendsModel();
         $waitFriendsDAO = new WaitFriendsDAO();
         $userDAO = new UserDAO();
+        $waitFriendsModel->setByArray(json_decode(file_get_contents('php://input'))); // 요청받은 파라미터를 객체에 맞게끔 변형, data set
+        $waitFriendsModel->setAddTime(time()); // 시간은 서버 시간으로 세팅
+        $waitFriendsModel->setAddState(0); //신청 수락 여부 Default=0
+        $waitFriendsModel->setApplicantId($waitFriendsModel->getApplicantId()); //현재 로그인 한 유저의 id
+        $user = $userDAO->selectbyId($waitFriendsModel->getApplicantId()); //현재 로그인한 유저 정보 select
+        $userName = $user->getName(); // 유저의 name
+        $waitFriendsModel->setApplicantName($userName); //setName
 
-        if (!empty($uriArray[2])) {
-            $waitFriendsModel->setByArray(json_decode(file_get_contents('php://input'))); // 요청받은 파라미터를 객체에 맞게끔 변형, data set
-            $waitFriendsModel->setAddTime(time()); // 시간은 서버 시간으로 세팅
-            $waitFriendsModel->setAddState(0); //신청 수락 여부 Default=0
-            $waitFriendsModel->setApplicantId($uriArray[2]); //현재 로그인 한 유저의 id
-            $user = $userDAO->selectbyId($uriArray[2]); //현재 로그인한 유저 정보 select
-            $userName = $user->getName(); // 유저의 name
-            $waitFriendsModel->setApplicantName($userName); //setName
+        $waitFriendsId = $waitFriendsDAO->insert($waitFriendsModel);
+        if ($waitFriendsId > 0) {
+            $data = ["result" => true,
+                "id" => "{$waitFriendsId}",
+                "applicantId" => "{$waitFriendsModel->getApplicantId()}",
+                "recipendtId" => "{$waitFriendsModel->getRecipientId()}",
+            ];
 
-            $waitFriendsId = $waitFriendsDAO->insert($waitFriendsModel);
-            if ($waitFriendsId > 0) {
-                $data = ["result" => true,
-                    "id" => "{$waitFriendsId}",
-                    "applicant_id" => "{$waitFriendsModel->getApplicantId()}",
-                    "recipendt_id" => "{$waitFriendsModel->getRecipientId()}",
-                ];
-
-                return json_encode($data);
-            } else {
-                $data = [
-                    "result" => false,
-                    "errorMessage" => "Not insert"
-                ];
-
-                return json_encode($data);
-            }
-
+            return json_encode($data);
         } else {
             $data = [
                 "result" => false,
-                "errorMessage" => "parameter is null"
+                "errorMessage" => "Not insert"
             ];
 
             return json_encode($data);
         }
 
-
     }
 
-    public function createFriends($uriArray) //POST rqfriends : 친구신청수락
+    public function createFriends() //POST rqfriends : 친구신청수락
     {
         $waitFriendsModel = new WaitFriendsModel();
         $waitFriendsDAO = new WaitFriendsDAO();
 
         $friendsModel = new FriendsModel();
         $freindsDAO = new FriendsDAO();
+        $waitFriendsModel->setByArray(json_decode(file_get_contents('php://input'))); // 요청받은 파라미터를 객체에 맞게끔 변형, data set
+        $waitFriendsModel->setAcceptTime(time()); // 시간은 서버 시간으로 세팅
+        $waitFriendsModel->setAddState(1); //신청 수락
+        $waitFriendsId = $waitFriendsDAO->updateAcceptTime($waitFriendsModel);
 
-        if (!empty($uriArray[2])) {
-            $waitFriendsModel->setAcceptTime(time()); // 시간은 서버 시간으로 세팅
-            $waitFriendsModel->setAddState(1); //신청 수락
-            $waitFriendsId = $waitFriendsDAO->updateAcceptTime($uriArray[2], $waitFriendsModel);
+        $friendsModel->setCreatedAt(time());
+        $waitFriends = $waitFriendsDAO->selectbyId($waitFriendsModel->getId());//신청 사항 id로 조회
+        $userId = $waitFriends->getApplicantId();
+        $friendsId = $waitFriends->getRecipientId();
+        $friendsModel->setUserId($userId);
+        $friendsModel->setFriendsId($friendsId);
+        $friendsOne = $freindsDAO->insert($friendsModel);
+        $friendsModel->setUserId($friendsId);
+        $friendsModel->setFriendsId($userId);
+        $friendsTwo = $freindsDAO->insert($friendsModel);
 
-            $friendsModel->setCreatedAt(time());
-            $waitFriends = $waitFriendsDAO->selectbyId($uriArray[2]);//신청 사항 id로 조회
-            $userId = $waitFriends->getApplicantId();
-            $friendsId = $waitFriends->getRecipientId();
-            $friendsModel->setUserId($userId);
-            $friendsModel->setFriendsId($friendsId);
-            $friendsOne = $freindsDAO->insert($friendsModel);
-            $friendsModel->setUserId($friendsId);
-            $friendsModel->setFriendsId($userId);
-            $friendsTwo = $freindsDAO->insert($friendsModel);
+        if ($waitFriendsId > 0 and $friendsOne > 0 and $friendsTwo > 0) {
+            $data = ["result" => true];
 
-            if ($waitFriendsId > 0 and $friendsOne > 0 and $friendsTwo > 0) {
-                $data = ["result" => true];
-
-                return json_encode($data);
-            } else {
-                $data = [
-                    "result" => false,
-                    "errorMessage" => "Not update"
-                ];
-
-                return json_encode($data);
-            }
-
+            return json_encode($data);
         } else {
             $data = [
                 "result" => false,
-                "errorMessage" => "parameter is null"
+                "errorMessage" => "Not update"
             ];
 
             return json_encode($data);
         }
+    }
 
+    public function deleteWaitFriends() //POST refuse-rqfriends : 친구신청거절
+    {
+        $waitFriendsModel = new WaitFriendsModel();
+        $waitFriendsDAO = new WaitFriendsDAO();
 
+        $waitFriendsModel->setByArray(json_decode(file_get_contents('php://input'))); // 요청받은 파라미터를 객체에 맞게끔 변형, data set
+        $result = $waitFriendsDAO->delete($waitFriendsModel->getId());
+        if (!empty($result)) { //정상적으로 delete
+            $data = ["result" => true];
+
+            return json_encode($data);
+        } else { // 잘못된 파라미터 값
+            $data = ["result" => false,
+                "errorMessage" => "id is Not Found"]; //존재하지 않는 id
+
+            return json_encode($data);
+        }
     }
 
     public function updateFriends($uriArray) //PUT friends/favorite or block : 즐겨찾기 or 차단친구 추가
@@ -297,30 +292,6 @@ class FriendsController
             return json_encode($data);
         }
 
-    }
-
-    public function deleteWaitFriends($uriArray) //POST refuse-rqfriends : 친구신청거절
-    {
-        $waitFriendsDAO = new WaitFriendsDAO();
-
-        if (!empty($uriArray[2])) { // 파라미터 유효성 검사
-            $result = $waitFriendsDAO->delete($uriArray[2]);
-            if (!empty($result)) { //정상적으로 delete
-                $data = ["result" => true];
-
-                return json_encode($data);
-            } else { // 잘못된 파라미터 값
-                $data = ["result" => false,
-                    "errorMessage" => "id is Not Found"]; //존재하지 않는 id
-
-                return json_encode($data);
-            }
-        } else { //파라미터값 is null
-            $data = ["result" => false,
-                "errorMessage" => "parameter is null"]; //삭제할 유저 id값이 안넘어왔을 때
-
-            return json_encode($data);
-        }
     }
 
     public function deleteFriends() //DELETE friends : 친구 삭제
