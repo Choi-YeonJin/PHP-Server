@@ -26,6 +26,7 @@ class ContractDAO extends BaseDAO
                     lender_bank,
                     lender_account,
                     penalty,
+                    content,
                     alarm,
                     created_at
                     ) VALUES (
@@ -38,8 +39,24 @@ class ContractDAO extends BaseDAO
                     '{$contractModel->getLenderBank()}',
                     {$contractModel->getLenderAccount()},
                     '{$penalty}',
+                    '{$contractModel->getContent()}',
                     {$contractModel->getAlarm()},
                     {$contractModel->getCreatedAt()})";
+
+        $this->db->executeQuery($query);
+        return $this->db->getInsertId();
+    }
+
+    /**
+     * @param ContractModel $contractModel
+     * @return false|int|null
+     */
+    public function insertContent(ContractModel $contractModel){
+
+        $query = "INSERT INTO {$this->tableName} (
+                    content
+                    ) VALUES (
+                    '{$contractModel->getContent()}'";
 
         $this->db->executeQuery($query);
         return $this->db->getInsertId();
@@ -63,7 +80,6 @@ class ContractDAO extends BaseDAO
         $query = "select * from {$this->tableName} where lender_id={$user_id}";
         $this->db->executeQuery($query);
         return $this->db->getAllResultAsObject(new ContractModel());
-//        return $query;
     }
 
     /**
@@ -77,7 +93,7 @@ class ContractDAO extends BaseDAO
 
         $query = "UPDATE {$this->tableName} SET title='{$contractModel->getTitle()}', borrow_date='{$contractModel->getBorrowDate()}',
                     payback_date='{$contractModel->getPaybackDate()}',price={$contractModel->getPrice()}, lender_id = {$contractModel->getLenderId()} 
-                    ,lender_name='{$contractModel->getLenderName()}',penalty='{$penalty}',alarm={$contractModel->getAlarm()}, 
+                    ,lender_name='{$contractModel->getLenderName()}',content='{$contractModel->getContent()}', penalty='{$penalty}',alarm={$contractModel->getAlarm()}, 
                     updated_at={$contractModel->getUpdatedAt()} where id={$id}";
 
         $this->db->executeQuery($query);

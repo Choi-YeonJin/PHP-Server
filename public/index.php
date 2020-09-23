@@ -47,8 +47,16 @@ switch ($method . ":" . $uriArray[1]) {
         $userJson = $userController->login(file_get_contents('php://input'));
         echo $userJson;
         break;
+    case "POST:select-userByName":
+        $userJson = $userController->sleectUserName(file_get_contents('php://input'));
+        echo $userJson;
+        break;
     case "PUT:user": //유저 정보 수정
         $userJson = $userController->update($uriArray);
+        echo $userJson;
+        break;
+    case "PUT:user-pw": //유저 정보 수정
+        $userJson = $userController->updatePw($uriArray);
         echo $userJson;
         break;
     case "PUT:bank-registration": // 유저 은행 정보 insert
@@ -68,8 +76,20 @@ switch ($method . ":" . $uriArray[1]) {
         $contractJson = $contractController->select($uriArray);
         echo $contractJson;
         break;
+    case "GET:contract-content":
+        $contractJson = $contractController->selectContent($uriArray);
+        echo $contractJson;
+        break;
+    case "GET:contract-contents":
+        $contractJson = $contractController->selectContents($uriArray);//현재로그인한 유저
+        echo $contractJson;
+        break;
     case "POST:contract": //계약서 작성
         $contractJson = $contractController->create(file_get_contents('php://input'));
+        echo $contractJson;
+        break;
+    case "POST:contract-content":
+        $contractJson = $contractController->contentCreate(file_get_contents('php://input'));
         echo $contractJson;
         break;
     case "PUT:contract": // 계약서 수정
@@ -87,6 +107,10 @@ switch ($method . ":" . $uriArray[1]) {
     //FRIENDS
     case "GET:friends": // 현재 로그인 한 유저의 친구 목록 불러오기
         $friendsJson = $friendsController->selectFriends($uriArray);
+        echo $friendsJson;
+        break;
+    case "GET:request-friends": // 현재 로그인 한 유저의 친구 목록 불러오기
+        $friendsJson = $friendsController->selectReqFriends($uriArray);
         echo $friendsJson;
         break;
     case "GET:favorite-friends": // 즐겨찾기 친구 목록 불러오기

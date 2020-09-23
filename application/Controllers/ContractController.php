@@ -91,7 +91,8 @@ class ContractController
 
                 $borrowerList = $this->selectAllBorrower($result->getId()); //해당 계약서의 borrower 전체 조회
 
-                $data = ["title" => "{$result->getTitle()}",
+                $data = ["id" => "{$result->getId()}",
+                    "title" => "{$result->getTitle()}",
                     "borrowDate" => "{$result->getBorrowDate()}",
                     "paybackDate" => "{$result->getPaybackDate()}",
                     "price" => "{$result->getPrice()}",
@@ -100,6 +101,7 @@ class ContractController
                     "lenderAccount" => "{$result->getLenderAccount()}",
                     "borrower" => $borrowerList,
                     "penalty" => "{$result->getPenalty()}",
+                    "content" => "{$result->getContent()}",
                     "alarm" => "{$result->getAlarm()}",
                     "state" => "{$result->getState()}"];
 
@@ -157,6 +159,100 @@ class ContractController
         }
     }
 
+    public function selectContents($uriArray) //GET contract-contents : 현재 로그인 한 사용자의 전체 계약서 내용 조회
+    {
+        $contractDAO = new ContractDAO();
+        $borrowerDAO = new BorrowerDAO();
+
+        if (!empty($uriArray[2])) {
+
+            $lenderList = $contractDAO->selectByUserId($uriArray[2]); // contract table에서 lender_id가 user_id인 list
+            $borrowerList = $borrowerDAO->selectByUserId($uriArray[2]); // borrower table에서 borrower_id가 user_id인 list
+
+            $borrowerJson = array(); // if(empty(lenderList))
+            $lenderJson = array(); // if(empty(borrowerList))
+            $borrowerANDlenderJson = array(); // lenderList와 borrowerList 둘 다 Not empty
+            $contracts = array();
+            if (!empty($lenderList) or !empty($borrowerList)) {
+
+                if (empty($lenderList)) {
+                    foreach ($borrowerList as $borrowerModel) {
+                        $data = $borrowerModel->getContractId();
+                        array_push($borrowerJson, $data); // 위에 선언한 배열에 값 추가
+                    }
+                    $userContractJson = $borrowerJson;
+
+                } else if (empty($borrowerList)) {
+                    foreach ($lenderList as $lenderModel) {
+                        $data = $lenderModel->getId();
+                        array_push($lenderJson, $data); // 위에 선언한 배열에 값 추가
+                    }
+                    $userContractJson = $lenderJson;
+
+                } else {
+                    foreach ($borrowerList as $borrowerModel) {
+                        $data = $borrowerModel->getContractId();
+                        array_push($borrowerANDlenderJson, $data); // 위에 선언한 배열에 값 추가
+                    }
+                    foreach ($lenderList as $lenderModel) {
+                        $data = $lenderModel->getId();
+                        array_push($borrowerANDlenderJson, $data); // 위에 선언한 배열에 값 추가
+                    }
+                    $userContractJson = $borrowerANDlenderJson;
+                }
+
+                foreach ($userContractJson as $item) {
+                    $contract = $this->selectContent($item);
+                    array_push($contracts, $contract);
+
+                }
+                return json_encode($contracts, JSON_UNESCAPED_UNICODE);
+
+            } else {
+                $data = ["result" => false,
+                    "errorMessage" => "Contract is Not Found"];
+
+                return json_encode($data);
+            }
+
+        } else {
+            $data = ["result" => false,
+                "errorMessage" => "parameter is null"];
+
+            return json_encode($data);
+        }
+
+    }
+
+    public function selectContent($contractId) //GET contract-content : 계약서 조회
+    {
+        $contractDAO = new contractDAO();
+
+        if (!empty($contractId)) { // 파라미터 값 유효성 검사
+            $result = $contractDAO->selectbyId($contractId);
+
+            if (!empty($result)) { // 조회 성공
+
+                $data = [
+                    "title"=>"{$result->getTitle()}",
+                    "content" => "{$result->getContent()}"];
+
+//                $contractContent = json_encode($data, JSON_UNESCAPED_UNICODE);
+
+                return $data;
+            } else { // 조회 실패
+                $data = ["result" => false];
+
+                return json_encode($data);
+            }
+        } else { // 파라미터 값 is null
+            $data = ["result" => false,
+                "errorMessage" => "parameter is null"]; //조회할 유저 id값이 안넘어왔을 때
+
+            return json_encode($data);
+        }
+    }
+
     public function selectAllBorrower($contract_id) //select : contract_id를 가진 borrower 전체 조회
     {
         $borrowerDAO = new BorrowerDAO();
@@ -184,6 +280,12 @@ class ContractController
         $contractModel->setByArray(json_decode($data)); // 요청받은 파라미터를 객체에 맞게끔 변형, data set
         $contractModel->setCreatedAt(time()); // 시간은 서버 시간으로 세팅
         $contractModel->setState(0);// 계약서 완료 여부 (defaul=0)
+        if(empty($contractModel->getLenderAccount())){
+            $contractModel->setLenderAccount(0);// 계약서 완료 여부 (defaul=0)
+        }
+        if(empty($contractModel->getLenderId())){
+            $contractModel->setLenderId(1);// 비회원일 경우, id를 관리자 id로 insert
+        }
 
         $contractId = $contractDAO->insert($contractModel); // contract 테이블 insert
 
@@ -198,7 +300,7 @@ class ContractController
 
                 if (empty($borrower['borrower_id'])) // 비회원인 경우, 관리자 유저 id값을 넣어줌
                 {
-                    $borrower['borrower_id'] = 41;
+                    $borrower['borrower_id'] = 1;
                 }
                 $borrowerModel->setByArray($borrower);
                 $borrowerModel->setCreatedAt(time());
@@ -260,7 +362,7 @@ class ContractController
 
                     if (empty($borrower['borrower_id'])) // 비회원인 경우, 관리자 유저 id값을 넣어줌
                     {
-                        $borrower['borrower_id'] = 41;
+                        $borrower['borrower_id'] = 1;
                     }
                     $borrowerModel->setByArray($borrower);
                     $borrowerModel->setUpdatedAt(time());
