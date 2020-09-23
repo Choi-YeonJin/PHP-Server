@@ -7,6 +7,7 @@
  */
 
 namespace DAO;
+use http\Client\Curl\User;
 use Model\UserModel;
 
 include_once("../application/lib/autoload.php");
@@ -73,8 +74,19 @@ class UserDAO extends BaseDAO
     /**
      * @return UserModel[]
      */
-    public function selectAll(){
+    public function selectAll()
+    {
         $query = "SELECT * FROM {$this->tableName}";
+        $this->db->executeQuery($query);
+        return $this->db->getAllResultAsObject(new UserModel());
+    }
+
+    /**
+     * @param $userModel UserModel
+     * @return UserModel[]
+     */
+    public function selectbyUserName($userModel){
+        $query = "SELECT * FROM {$this->tableName} where name = '{$userModel->getName()}'";
         $this->db->executeQuery($query);
         return $this->db->getAllResultAsObject(new UserModel());
     }
@@ -85,7 +97,18 @@ class UserDAO extends BaseDAO
      * @return int|null
      */
     public function update($id,UserModel $userModel){
-        $query = "UPDATE {$this->tableName} SET name='{$userModel->getName()}', password='{$userModel->getPassword()}' where id={$id}";
+        $query = "UPDATE {$this->tableName} SET image_url='{$userModel->getImageUrl()}', password='{$userModel->getPassword()}' where id={$id}";
+        $this->db->executeQuery($query);
+        return $this->stmt->rowCount();
+    }
+
+    /**
+     * @param $id int
+     * @param UserModel $userModel
+     * @return int|null
+     */
+    public function updatePw($id,UserModel $userModel){
+        $query = "UPDATE {$this->tableName} SET password='{$userModel->getPassword()}' where id={$id}";
         $this->db->executeQuery($query);
         return $this->stmt->rowCount();
     }

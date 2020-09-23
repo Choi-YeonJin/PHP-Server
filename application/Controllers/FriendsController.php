@@ -18,17 +18,74 @@ class FriendsController
     public function selectFriends($uriArray) //GET friends : 친구 목록 가져오기
     {
         $friendsDAO = new FriendsDAO();
+        $userDAO = new UserDAO();
 
         if (!empty($uriArray[2])) {
             $friensList = $friendsDAO->selectbyUserId($uriArray[2]);
+//            $friendsName = $friensList->getArray();
+//            print_r($friensList);
 
             $friendsJson = array(); // 전체 유저 조회할 배열 선언
             foreach ($friensList as $friendsModel) {
-                $data = $friendsModel->getArray();
+                $id = $friendsModel->getFriendsId();
+                $userInfo = $userDAO->selectbyId($id);
+
+                $data = ["id" => "{$friendsModel->getId()}",
+                    "userId" => "{$friendsModel->getUserId()}",
+                    "friendsId" => "{$friendsModel->getFriendsId()}",
+                    "friendsName" => "{$userInfo->getName()}",
+                    "friendsMyid" => "{$userInfo->getMyid()}",
+                    "friendsPhoneNum" => "{$userInfo -> getPhoneNum()}",
+                    "friendsBank" => "{$userInfo->getBank()}",
+                    "friendsAccount" => "{$userInfo->getAccount()}",
+                    "favorite" => "{$friendsModel->getFavorite()}",
+                    "block" => "{$friendsModel->getBlock()}",
+                    "createdAt" => "{$friendsModel->getCreatedAt()}",
+                    "updatedAt" => "{$friendsModel->getUpdatedAt()}"];
                 array_push($friendsJson, $data); // 위에 선언한 배열에 값 추가
             }
 
             return json_encode($friendsJson, JSON_UNESCAPED_UNICODE); //JSON_UNESCAPED_UNICODE : 한국어 패치
+        } else {
+            $data = [
+                "result" => false,
+                "errorMessage" => "parameter is null"
+            ];
+
+            return json_encode($data);
+        }
+
+    }
+
+    public function selectReqFriends($uriArray) //GET request - friends : 친구 신청 목록 가져오기
+    {
+        $friendsDAO = new FriendsDAO();
+        $waitFriendsDAO = new WaitFriendsDAO();
+        $userDAO = new UserDAO();
+
+        if (!empty($uriArray[2])) {
+            $reqFriensList = $waitFriendsDAO->selectRequestFriends($uriArray[2]);
+//            var_export($reqFriensList);
+            $reqFriendsJson = array(); // 전체 유저 조회할 배열 선언
+
+            foreach ($reqFriensList as $waitFriendsModel) {
+                $id = $waitFriendsModel->getApplicantId();
+                $userInfo = $userDAO->selectbyId($id);
+
+                $data = ["id" => "{$waitFriendsModel->getId()}",
+                    "requestTime" => "{$waitFriendsModel->getRequestTime()}",
+                    "applicantId" => "{$waitFriendsModel->getApplicantId()}",
+                    "applicantName" => "{$waitFriendsModel->getApplicantName()}",
+                    "applicantMyid" => "{$userInfo->getMyid()}",
+                    "recipientId" => "{$waitFriendsModel->getRecipientId()}",
+                    "recipientName" => "{$waitFriendsModel -> getRecipientName()}",
+                    "acceptState" => "{$waitFriendsModel->getAcceptState()}",
+                    "acceptTime" => "{$waitFriendsModel->getAcceptTime()}"];
+
+                array_push($reqFriendsJson, $data); // 위에 선언한 배열에 값 추가
+            }
+
+            return json_encode($reqFriendsJson, JSON_UNESCAPED_UNICODE); //JSON_UNESCAPED_UNICODE : 한국어 패치
         } else {
             $data = [
                 "result" => false,

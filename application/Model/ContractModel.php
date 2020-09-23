@@ -55,6 +55,11 @@ class ContractModel extends BaseModel
     private $penalty;
 
     /**
+     * @var string
+     */
+    private $content;
+
+    /**
      * @var int
      */
     private $alarm;
@@ -232,6 +237,22 @@ class ContractModel extends BaseModel
     public function setPenalty(?string $penalty): void
     {
         $this->penalty = $penalty;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContent(): ?string
+    {
+        return $this->content;
+    }
+
+    /**
+     * @param string $content
+     */
+    public function setContent(?string $content): void
+    {
+        $this->content = $content;
     }
 
     /**

@@ -43,6 +43,15 @@ class WaitFriendsDAO extends BaseDAO
     }
 
     /**
+     * @return WaitFriendsModel[]
+     */
+    public function selectRequestFriends($userId){
+        $query = "SELECT * FROM {$this->tableName} where recipient_id={$userId} And accept_state= 0";
+        $this->db->executeQuery($query);
+        return $this->db->getAllResultAsObject(new WaitFriendsModel());
+    }
+
+    /**
      * @param WaitFriendsModel $waitFriendsModel
      * @return false|int|null
      */
