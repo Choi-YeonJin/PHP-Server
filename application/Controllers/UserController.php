@@ -98,6 +98,7 @@ class UserController
 
     public function login($data) //POST sign-in : 로그인
     {
+        error_log("!!!!!!!!!!!!!!! sign-in");
         $userModel = new UserModel();
         $userModel->setByArray(json_decode($data)); // 요청받은 파라미터를 객체에 맞게끔 변형, data set
         $userModel->setCreatedAt(time()); // 시간은 서버 시간으로 세팅
