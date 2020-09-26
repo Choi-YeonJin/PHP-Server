@@ -102,7 +102,7 @@ switch ($method . ":" . $uriArray[1]) {
         echo $friendsJson;
         break;
     case "GET:request-friends": // 현재 로그인 한 유저의 친구 신청 목록 불러오기
-        $friendsJson = $friendsController->selectAllReqFriends();
+        $friendsJson = $friendsController->selectAllReqFriends($uriArray);
         echo $friendsJson;
         break;
     case "GET:request-friend": // 현재 로그인 한 유저의 친구 신청 목록 불러오기

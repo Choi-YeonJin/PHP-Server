@@ -57,13 +57,14 @@ class FriendsController
 
     }
 
-    public function selectAllReqFriends() //GET request - friend : 친구 신청 전체 목록 가져오기
+    public function selectAllReqFriends($uriArray) //GET request - friend : 친구 신청 전체 목록 가져오기
     {
         $friendsDAO = new FriendsDAO();
         $waitFriendsDAO = new WaitFriendsDAO();
         $userDAO = new UserDAO();
 
-            $reqFriensList = $waitFriendsDAO->selectAllRequestFriends();
+        if (!empty($uriArray[2])) {
+            $reqFriensList = $waitFriendsDAO->selectAllRequestFriends($uriArray[2]);
 //            var_export($reqFriensList);
             $reqFriendsJson = array(); // 전체 유저 조회할 배열 선언
 
@@ -74,6 +75,15 @@ class FriendsController
             }
 
             return json_encode($reqFriendsJson, JSON_UNESCAPED_UNICODE); //JSON_UNESCAPED_UNICODE : 한국어 패치
+        }else{
+            $data = [
+                "result" => false,
+                "errorMessage" => "parameter is null"
+            ];
+
+            return json_encode($data);
+        }
+
 
     }
 
