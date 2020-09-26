@@ -63,6 +63,7 @@ class UserController
         $userDAO = new UserDAO();
         $userModel->setByArray(json_decode($data)); // 요청받은 파라미터를 객체에 맞게끔 변형, data set
         $userModel->setCreatedAt(time()); // 시간은 서버 시간으로 세팅
+        $userModel->setPassword(md5($userModel->getPassword()));
 
         $userId = $userDAO->insert($userModel);
 
@@ -106,7 +107,7 @@ class UserController
         $userDAO = new UserDAO();
 
         $myid = $userModel->getMyid();
-        $password = $userModel->getPassword();
+        $password = md5($userModel->getPassword());
 
         $userModel = $userDAO->selectByMyIDAndPassword($myid, $password);
         if (!empty($userModel)) { // 로그인 성공
@@ -151,7 +152,7 @@ class UserController
             if(empty($userModel->getPassword())) //Image 변경시
             {
                 $userPw = json_decode($user)->password;
-                $userModel->setPassword($userPw);
+                $userModel->setPassword(md5($userPw));
             }else if(empty($userModel->getImageUrl())) {
                 $userImage = json_decode($user)->imageUrl;
                 $userModel->setImageUrl($userImage);
@@ -185,6 +186,7 @@ class UserController
         $userDAO = new UserDAO();
 
         if(!empty($uriArray[2])){ // 파라미터 유효성 검사
+            $userModel->setPassword(md5($userModel->getPassword()));
             $result = $userDAO->updatePw($uriArray[2],$userModel);
             if (!empty($result)) { // 유저 비밀번호, 이름 업데이트 성공
                 $data = ["result" => true];
